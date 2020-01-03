@@ -5,17 +5,18 @@ For general information about contributing changes, see the
 
 ## How it Works
 
-Describe the internal mechanisms necessary for developers to understand how
-to get started making changes.
+The Remote SDK currently provides interfaces only for use by the client. This includes the ability to register
+remote providers, and parse URIs. Future work will add server-side capabilities for use in titan-server, enabling
+the EOL of the legacy kotlin remote providers.
 
 ## Building
 
-Describe how to build the project.
+Run `go build -v ./...`.
 
 ## Testing
 
-Describe how to test the project.
+Run `go test -v ./...`.
 
 ## Releasing
 
-Describe how to generate new releases.
+Push a tag of the form `v<X>.<Y>.<Z>`, and publish the draft release in GitHub.
