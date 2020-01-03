@@ -1,3 +1,6 @@
+/*
+ * Copyright The Titan Project Contributors.
+ */
 package remote
 
 import (
