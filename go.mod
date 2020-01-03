@@ -1,4 +1,4 @@
-module github.com/titan-data/titan-client-go
+module github.com/titan-data/remote-sdk-go
 
 require github.com/stretchr/testify v1.4.0
 
