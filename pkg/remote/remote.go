@@ -64,4 +64,3 @@ func Get(remoteType string) Remote {
 func Clear() {
 	registeredRemotes = map[string]Remote{}
 }
-

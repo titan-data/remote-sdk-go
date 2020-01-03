@@ -44,4 +44,3 @@ func TestRegister(t *testing.T) {
 	assert.Equal(t, "mock", res.Type())
 	r.AssertExpectations(t)
 }
-
