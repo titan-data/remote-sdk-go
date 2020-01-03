@@ -34,4 +34,3 @@ func (r *MockRemote) GetParameters(remoteProperties map[string]interface{}) (map
 	args := r.Called(remoteProperties)
 	return args.Get(0).(map[string]interface{}), args.Error(1)
 }
-
