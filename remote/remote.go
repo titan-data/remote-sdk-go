@@ -24,7 +24,7 @@ type Remote interface {
 	 * additional properties map can contain properties specified by the user that don't fit the URI format well,
 	 * such as "-p keyFile=/path/to/sshKey". This should return an error a bad URL format or invalid properties.
 	 */
-	FromURL(url url.URL, additionalProperties map[string]string) (map[string]interface{}, error)
+	FromURL(url *url.URL, additionalProperties map[string]string) (map[string]interface{}, error)
 
 	/*
 	 * Convert a remote back into URI form for display. Since this is for display only, any sensitive information
