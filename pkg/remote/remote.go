@@ -57,3 +57,11 @@ func Register(remote Remote) {
 func Get(remoteType string) Remote {
 	return registeredRemotes[remoteType]
 }
+
+/*
+ * Clear any registered remotes. Should only be used for testing.
+ */
+func Clear() {
+	registeredRemotes = map[string]Remote{}
+}
+
