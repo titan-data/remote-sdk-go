@@ -49,6 +49,7 @@ func TestFragment(t *testing.T) {
 	r := registerDefaultRemote()
 	_, _, _, commit, _ := ParseURL("mock://foo#commit", map[string]string{})
 	assert.Equal(t, "commit", commit)
+	assert.Equal(t, "mock://foo", r.u)
 	r.AssertExpectations(t)
 }
 
@@ -65,6 +66,7 @@ func TestQueryParams(t *testing.T) {
 	assert.Len(t, tags, 2)
 	assert.Equal(t, "one", tags[0])
 	assert.Equal(t, "two=three", tags[1])
+	assert.Equal(t, "mock://foo", r.u)
 	r.AssertExpectations(t)
 }
 
@@ -116,13 +118,6 @@ func TestProviderArguments(t *testing.T) {
 	_, _, _, _, _ = ParseURL("mock://user:pass@host:80/path", map[string]string{"a": "b"})
 	assert.Len(t, r.props, 1)
 	assert.Equal(t, "b", r.props["a"])
-	assert.Equal(t, "mock", r.u.Scheme)
-	assert.Equal(t, "host", r.u.Hostname())
-	assert.Equal(t, "80", r.u.Port())
-	assert.Equal(t, "/path", r.u.Path)
-	assert.Equal(t, "user", r.u.User.Username())
-	pass, set := r.u.User.Password()
-	assert.Equal(t, "pass", pass)
-	assert.True(t, set)
+	assert.Equal(t, "mock://user:pass@host:80/path", r.u)
 	r.AssertExpectations(t)
 }

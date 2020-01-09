@@ -1,7 +1,5 @@
 package echo
 
-import "net/url"
-
 type EchoRemote struct {
 }
 
@@ -9,8 +7,10 @@ func (m EchoRemote) Type() (string, error) {
 	return "echo", nil
 }
 
-func (m EchoRemote) FromURL(url *url.URL, additionalProperties map[string]string) (map[string]interface{}, error) {
-	ret := map[string]interface{}{}
+func (m EchoRemote) FromURL(url string, additionalProperties map[string]string) (map[string]interface{}, error) {
+	ret := map[string]interface{}{
+		"url": url,
+	}
 	for k, v := range additionalProperties {
 		ret[k] = v
 	}

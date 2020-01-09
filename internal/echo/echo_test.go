@@ -2,7 +2,6 @@ package echo
 
 import (
 	"github.com/stretchr/testify/assert"
-	"net/url"
 	"testing"
 )
 
@@ -22,10 +21,10 @@ func TestToURL(t *testing.T) {
 
 func TestFromURL(t *testing.T) {
 	r := EchoRemote{}
-	u, _ := url.Parse("echo://echo")
-	res, _ := r.FromURL(u, map[string]string{"a": "b"})
-	assert.Len(t, res, 1)
+	res, _ := r.FromURL("echo://echo", map[string]string{"a": "b"})
+	assert.Len(t, res, 2)
 	assert.Equal(t, "b", res["a"])
+	assert.Equal(t, "echo://echo", res["url"])
 }
 
 func TestGetParameters(t *testing.T) {

@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
-	"net/url"
 	"os"
 	"os/exec"
 )
@@ -32,7 +31,7 @@ type Remote interface {
 	 * such as "-p keyFile=/path/to/sshKey". This should return an error for a bad URL format or invalid properties.
 	 * The calling context will have stripped out any query parameters or fragments.
 	 */
-	FromURL(url *url.URL, properties map[string]string) (map[string]interface{}, error)
+	FromURL(url string, properties map[string]string) (map[string]interface{}, error)
 
 	/*
 	 * Convert a remote back into URI form for display. Since this is for display only, any sensitive information

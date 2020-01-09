@@ -10,7 +10,6 @@ import (
 	proto "github.com/titan-data/remote-sdk-go/internal/proto"
 	"github.com/titan-data/remote-sdk-go/internal/util"
 	"google.golang.org/grpc"
-	"net/url"
 )
 
 type remoteRPCClient struct {
@@ -25,7 +24,7 @@ func (r remoteRPCClient) Type() (string, error) {
 	return res.Type, nil
 }
 
-func (r remoteRPCClient) FromURL(url *url.URL, additionalProperties map[string]string) (map[string]interface{}, error) {
+func (r remoteRPCClient) FromURL(url string, additionalProperties map[string]string) (map[string]interface{}, error) {
 	panic("implement me")
 }
 

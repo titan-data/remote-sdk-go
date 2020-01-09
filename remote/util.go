@@ -42,7 +42,9 @@ func ParseURL(input string, properties map[string]string) (string, map[string]in
 		tags = u.Query()["tag"]
 	}
 
-	props, err := r.FromURL(u, properties)
+	u.RawQuery = ""
+	u.Fragment = ""
+	props, err := r.FromURL(u.String(), properties)
 	if err != nil {
 		return "", nil, nil, "", err
 	}
