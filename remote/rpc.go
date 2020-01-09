@@ -5,8 +5,10 @@ package remote
 
 import (
 	"context"
+	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/hashicorp/go-plugin"
-	"github.com/titan-data/remote-sdk-go/internal/proto"
+	proto "github.com/titan-data/remote-sdk-go/internal/proto"
+	"github.com/titan-data/remote-sdk-go/internal/util"
 	"google.golang.org/grpc"
 	"net/url"
 )
@@ -16,8 +18,11 @@ type remoteRPCClient struct {
 }
 
 func (r remoteRPCClient) Type() (string, error) {
-	resp, err := r.Client.Type(context.Background(), &proto.Empty{})
-	return resp.Type, err
+	res, err := r.Client.Type(context.Background(), &empty.Empty{})
+	if err != nil {
+		return "", err
+	}
+	return res.Type, nil
 }
 
 func (r remoteRPCClient) FromURL(url *url.URL, additionalProperties map[string]string) (map[string]interface{}, error) {
@@ -25,7 +30,16 @@ func (r remoteRPCClient) FromURL(url *url.URL, additionalProperties map[string]s
 }
 
 func (r remoteRPCClient) ToURL(properties map[string]interface{}) (string, map[string]string, error) {
-	panic("implement me")
+	s, err := util.Map2Struct(properties)
+	if err != nil {
+		return "", nil, err
+	}
+	props := proto.RemoteProperties{Values: s}
+	res, err := r.Client.ToURL(context.Background(), &props)
+	if err != nil {
+		return "", nil, err
+	}
+	return res.Url, res.Values, nil
 }
 
 func (r remoteRPCClient) GetParameters(remoteProperties map[string]interface{}) (map[string]interface{}, error) {
@@ -36,12 +50,32 @@ type remoteRPCServer struct {
 	Impl Remote
 }
 
-func (r *remoteRPCServer) Type(ctx context.Context, req *proto.Empty) (*proto.RemoteType, error) {
+func (r *remoteRPCServer) Type(context.Context, *empty.Empty) (*proto.RemoteType, error) {
 	typ, err := r.Impl.Type()
 	if err != nil {
 		return nil, err
 	}
 	return &proto.RemoteType{Type: typ}, nil
+}
+
+func (r *remoteRPCServer) ToURL(ctx context.Context, req *proto.RemoteProperties) (*proto.ExtendedURL, error) {
+	input, err := util.Struct2Map(req.Values)
+	if err != nil {
+		return nil, err
+	}
+	url, props, err := r.Impl.ToURL(input)
+	if err != nil {
+		return nil, err
+	}
+	ret := &proto.ExtendedURL{
+		Url:    url,
+		Values: props,
+	}
+	return ret, nil
+}
+
+func (r *remoteRPCServer) GetParameters(context.Context, *proto.RemoteProperties) (*proto.ParameterProperties, error) {
+	panic("implement me")
 }
 
 type remotePlugin struct {
