@@ -26,6 +26,17 @@ func TestPluginType(t *testing.T) {
 	assert.Equal(t, "echo", ret)
 }
 
+func TestFromURL(t *testing.T) {
+	e := getEcho(t)
+	props, err := e.FromURL("echo://echo", map[string]string{"a": "b"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Len(t, props, 2)
+	assert.Equal(t, "b", props["a"])
+	assert.Equal(t, "echo://echo", props["url"])
+}
+
 func TestToURL(t *testing.T) {
 	e := getEcho(t)
 	url, props, err := e.ToURL(map[string]interface{}{"a": "b"})

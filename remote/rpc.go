@@ -24,8 +24,17 @@ func (r remoteRPCClient) Type() (string, error) {
 	return res.Type, nil
 }
 
-func (r remoteRPCClient) FromURL(url string, additionalProperties map[string]string) (map[string]interface{}, error) {
-	panic("implement me")
+func (r remoteRPCClient) FromURL(url string, properties map[string]string) (map[string]interface{}, error) {
+	input := proto.ExtendedURL{Url: url, Values: properties}
+	res, err := r.Client.FromURL(context.Background(), &input)
+	if err != nil {
+		return nil, err
+	}
+	output, err := util.Struct2Map(res.Values)
+	if err != nil {
+		return nil, err
+	}
+	return output, nil
 }
 
 func (r remoteRPCClient) ToURL(properties map[string]interface{}) (string, map[string]string, error) {
@@ -64,6 +73,18 @@ func (r *remoteRPCServer) Type(context.Context, *empty.Empty) (*proto.RemoteType
 		return nil, err
 	}
 	return &proto.RemoteType{Type: typ}, nil
+}
+
+func (r *remoteRPCServer) FromURL(ctx context.Context, req *proto.ExtendedURL) (*proto.RemoteProperties, error) {
+	props, err := r.Impl.FromURL(req.Url, req.Values)
+	if err != nil {
+		return nil, err
+	}
+	output, err := util.Map2Struct(props)
+	if err != nil {
+		return nil, err
+	}
+	return &proto.RemoteProperties{Values: output}, nil
 }
 
 func (r *remoteRPCServer) ToURL(ctx context.Context, req *proto.RemoteProperties) (*proto.ExtendedURL, error) {

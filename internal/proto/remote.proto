@@ -23,6 +23,7 @@ message ParameterProperties {
 
 service Remote {
     rpc Type(google.protobuf.Empty) returns (RemoteType);
+    rpc FromURL(ExtendedURL) returns (RemoteProperties);
     rpc ToURL(RemoteProperties) returns (ExtendedURL);
     rpc GetParameters(RemoteProperties) returns (ParameterProperties);
 }
