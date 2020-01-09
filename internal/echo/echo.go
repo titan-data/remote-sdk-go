@@ -28,5 +28,3 @@ func (m EchoRemote) ToURL(properties map[string]interface{}) (string, map[string
 func (m EchoRemote) GetParameters(remoteProperties map[string]interface{}) (map[string]interface{}, error) {
 	return remoteProperties, nil
 }
-
-
