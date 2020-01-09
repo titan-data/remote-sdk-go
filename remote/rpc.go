@@ -4,19 +4,20 @@
 package remote
 
 import (
+	"context"
 	"github.com/hashicorp/go-plugin"
-	"net/rpc"
+	"github.com/titan-data/remote-sdk-go/internal/proto"
+	"google.golang.org/grpc"
 	"net/url"
 )
 
 type remoteRPCClient struct {
-	Client *rpc.Client
+	Client proto.RemoteClient
 }
 
 func (r remoteRPCClient) Type() (string, error) {
-	var resp string
-	err := r.Client.Call("Plugin.Type", new(interface{}), &resp)
-	return resp, err
+	resp, err := r.Client.Type(context.Background(), &proto.Empty{})
+	return resp.Type, err
 }
 
 func (r remoteRPCClient) FromURL(url *url.URL, additionalProperties map[string]string) (map[string]interface{}, error) {
@@ -35,20 +36,24 @@ type remoteRPCServer struct {
 	Impl Remote
 }
 
-func (r *remoteRPCServer) Type(args interface{}, resp *string) error {
-	var err error
-	*resp, err = r.Impl.Type()
-	return err
+func (r *remoteRPCServer) Type(ctx context.Context, req *proto.Empty) (*proto.RemoteType, error) {
+	typ, err := r.Impl.Type()
+	if err != nil {
+		return nil, err
+	}
+	return &proto.RemoteType{Type: typ}, nil
 }
 
 type remotePlugin struct {
+	plugin.Plugin
 	Impl Remote
 }
 
-func (p *remotePlugin) Server(broker *plugin.MuxBroker) (interface{}, error) {
-	return &remoteRPCServer{Impl: p.Impl}, nil
+func (p *remotePlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
+	proto.RegisterRemoteServer(s, &remoteRPCServer{Impl: p.Impl})
+	return nil
 }
 
-func (remotePlugin) Client(b *plugin.MuxBroker, c *rpc.Client) (interface{}, error) {
-	return &remoteRPCClient{Client: c}, nil
+func (remotePlugin) GRPCClient(ctx context.Context, broker *plugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
+	return &remoteRPCClient{Client: proto.NewRemoteClient(c)}, nil
 }

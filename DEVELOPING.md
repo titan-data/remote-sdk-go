@@ -26,7 +26,7 @@ file. To do this, you will first need to:
 - Install the go protobuf generator (`go get -u github.com/golang/protobuf/protoc-gen-go` and ensure `$GOPATH/bin` is 
   in your path).
   
-Once those prerequisites are complete, run `protoc --go_out=plugins=grpc:. remote.proto` from the `remote`
+Once those prerequisites are complete, run `protoc --go_out=plugins=grpc:. remote.proto` from the `internal/proto`
 directory.
 
 ## Testing

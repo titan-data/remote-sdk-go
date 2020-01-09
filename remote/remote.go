@@ -48,7 +48,13 @@ type Remote interface {
 	GetParameters(remoteProperties map[string]interface{}) (map[string]interface{}, error)
 }
 
+type loadedRemote struct {
+	r Remote
+	c *plugin.Client
+}
+
 var registeredRemotes = map[string]Remote{}
+var loadedRemotes = map[string]loadedRemote{}
 
 /*
  * Register a new remote. This should be called from the init() function of a remote implementation. The remotes can
@@ -70,10 +76,14 @@ func Get(remoteType string) Remote {
 }
 
 /*
- * Clear any registered remotes. Should only be used for testing.
+ * Clear any registered or loaded remotes. Should only be used for testing.
  */
 func Clear() {
 	registeredRemotes = map[string]Remote{}
+	for _, v := range loadedRemotes {
+		v.c.Kill()
+	}
+	loadedRemotes = map[string]loadedRemote{}
 }
 
 var handshakeConfig = plugin.HandshakeConfig{
@@ -93,13 +103,18 @@ func Serve(remoteType string) {
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: handshakeConfig,
 		Plugins:         pluginMap,
+		GRPCServer:      plugin.DefaultGRPCServer,
 	})
 }
 
 /*
- * Load a remote via the plugin interface. The caller should invoke the Kill() method on the client when complete.
+ * Load a remote via the plugin interface. These plugins will remain loaded until Unload() or Clear() is called.
  */
-func Load(remoteType string, pluginPath string) (Remote, *plugin.Client, error) {
+func Load(remoteType string, pluginPath string) (Remote, error) {
+	if v, ok := loadedRemotes[remoteType]; ok {
+		return v.r, nil
+	}
+
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   "remote",
 		Output: os.Stdout,
@@ -112,21 +127,36 @@ func Load(remoteType string, pluginPath string) (Remote, *plugin.Client, error) 
 	}
 
 	client := plugin.NewClient(&plugin.ClientConfig{
-		HandshakeConfig: handshakeConfig,
-		Plugins:         pluginMap,
-		Cmd:             exec.Command(fmt.Sprintf("%s/%s", pluginPath, remoteType)),
-		Logger:          logger,
+		HandshakeConfig:  handshakeConfig,
+		Plugins:          pluginMap,
+		Cmd:              exec.Command(fmt.Sprintf("%s/%s", pluginPath, remoteType)),
+		Logger:           logger,
+		AllowedProtocols: []plugin.Protocol{plugin.ProtocolGRPC},
 	})
 
 	rpcClient, err := client.Client()
 	if err != nil {
-		return nil, client, err
+		client.Kill()
+		return nil, err
 	}
 
 	raw, err := rpcClient.Dispense("remote")
 	if err != nil {
-		return nil, client, err
+		client.Kill()
+		return nil, err
 	}
 
-	return raw.(Remote), client, nil
+	loadedRemotes[remoteType] = loadedRemote{
+		r: raw.(Remote),
+		c: client,
+	}
+
+	return raw.(Remote), nil
+}
+
+func Unload(remoteType string) {
+	if val, ok := loadedRemotes[remoteType]; ok {
+		val.c.Kill()
+		delete(loadedRemotes, remoteType)
+	}
 }
