@@ -42,8 +42,17 @@ func (r remoteRPCClient) ToURL(properties map[string]interface{}) (string, map[s
 	return res.Url, res.Values, nil
 }
 
-func (r remoteRPCClient) GetParameters(remoteProperties map[string]interface{}) (map[string]interface{}, error) {
-	panic("implement me")
+func (r remoteRPCClient) GetParameters(properties map[string]interface{}) (map[string]interface{}, error) {
+	p, err := util.Map2Struct(properties)
+	if err != nil {
+		return nil, err
+	}
+	input := proto.RemoteProperties{Values: p}
+	res, err := r.Client.GetParameters(context.Background(), &input)
+	if err != nil {
+		return nil, err
+	}
+	return util.Struct2Map(res.Values)
 }
 
 type remoteRPCServer struct {
@@ -74,12 +83,24 @@ func (r *remoteRPCServer) ToURL(ctx context.Context, req *proto.RemoteProperties
 	return ret, nil
 }
 
-func (r *remoteRPCServer) GetParameters(context.Context, *proto.RemoteProperties) (*proto.ParameterProperties, error) {
-	panic("implement me")
+func (r *remoteRPCServer) GetParameters(ctx context.Context, req *proto.RemoteProperties) (*proto.ParameterProperties, error) {
+	input, err := util.Struct2Map(req.Values)
+	if err != nil {
+		return nil, err
+	}
+	props, err := r.Impl.GetParameters(input)
+	if err != nil {
+		return nil, err
+	}
+	output, err := util.Map2Struct(props)
+	if err != nil {
+		return nil, err
+	}
+	return &proto.ParameterProperties{Values: output}, nil
 }
 
 type remotePlugin struct {
-	plugin.Plugin
+	plugin.NetRPCUnsupportedPlugin
 	Impl Remote
 }
 

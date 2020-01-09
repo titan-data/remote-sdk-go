@@ -36,3 +36,14 @@ func TestToURL(t *testing.T) {
 	assert.Len(t, props, 1)
 	assert.Equal(t, "b", props["a"])
 }
+
+func TestGetParameters(t *testing.T) {
+	e := getEcho(t)
+	props, err := e.GetParameters(map[string]interface{}{"a": "b", "c": 4})
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Len(t, props, 2)
+	assert.Equal(t, "b", props["a"])
+	assert.Equal(t, 4.0, props["c"])
+}
