@@ -49,6 +49,6 @@ func (p *remotePlugin) Server(broker *plugin.MuxBroker) (interface{}, error) {
 	return &remoteRPCServer{Impl: p.Impl}, nil
 }
 
-func (remotePlugin) Client(b *plugin.MuxBroker, c*rpc.Client) (interface{}, error) {
+func (remotePlugin) Client(b *plugin.MuxBroker, c *rpc.Client) (interface{}, error) {
 	return &remoteRPCClient{Client: c}, nil
 }

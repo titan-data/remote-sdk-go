@@ -1,4 +1,4 @@
-package mock
+package echo
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -7,13 +7,13 @@ import (
 )
 
 func TestType(t *testing.T) {
-	r := MockRemote{}
+	r := EchoRemote{}
 	typ, _ := r.Type()
 	assert.Equal(t, "mock", typ)
 }
 
 func TestToURL(t *testing.T) {
-	r := MockRemote{}
+	r := EchoRemote{}
 	u, props, _ := r.ToURL(map[string]interface{}{"a": "b"})
 	assert.Equal(t, "mock://mock", u)
 	assert.Len(t, props, 1)
@@ -21,7 +21,7 @@ func TestToURL(t *testing.T) {
 }
 
 func TestFromURL(t *testing.T) {
-	r := MockRemote{}
+	r := EchoRemote{}
 	u, _ := url.Parse("mock://mock")
 	res, _ := r.FromURL(u, map[string]string{"a": "b"})
 	assert.Len(t, res, 1)
@@ -29,9 +29,8 @@ func TestFromURL(t *testing.T) {
 }
 
 func TestGetParameters(t *testing.T) {
-	r := MockRemote{}
+	r := EchoRemote{}
 	res, _ := r.GetParameters(map[string]interface{}{"a": "b"})
 	assert.Len(t, res, 1)
 	assert.Equal(t, "b", res["a"])
 }
-

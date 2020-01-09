@@ -86,20 +86,13 @@ var handshakeConfig = plugin.HandshakeConfig{
  * Run the remote as a plugin server, to be invoked from the main method of the remote implementation.
  */
 func Serve(remoteType string) {
-	logger := hclog.New(&hclog.LoggerOptions{
-		Name:   "remote",
-		Output: os.Stdout,
-		Level:  hclog.Debug,
-	})
-
 	remote := Get(remoteType)
-	var pluginMap = map[string]plugin.Plugin {
+	var pluginMap = map[string]plugin.Plugin{
 		"remote": &remotePlugin{Impl: remote},
 	}
 	plugin.Serve(&plugin.ServeConfig{
-		HandshakeConfig:  plugin.HandshakeConfig{},
-		Plugins:          pluginMap,
-		Logger:           logger,
+		HandshakeConfig: handshakeConfig,
+		Plugins:         pluginMap,
 	})
 }
 
@@ -110,19 +103,19 @@ func Load(remoteType string, pluginPath string) (Remote, *plugin.Client, error) 
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   "remote",
 		Output: os.Stdout,
-		Level:  hclog.Debug,
+		Level:  hclog.Error,
 	})
 
 	remote := Get(remoteType)
-	var pluginMap = map[string]plugin.Plugin {
+	var pluginMap = map[string]plugin.Plugin{
 		"remote": &remotePlugin{Impl: remote},
 	}
 
 	client := plugin.NewClient(&plugin.ClientConfig{
 		HandshakeConfig: handshakeConfig,
-		Plugins: pluginMap,
-		Cmd: exec.Command(fmt.Sprintf("%s/%s", pluginPath, remoteType)),
-		Logger: logger,
+		Plugins:         pluginMap,
+		Cmd:             exec.Command(fmt.Sprintf("%s/%s", pluginPath, remoteType)),
+		Logger:          logger,
 	})
 
 	rpcClient, err := client.Client()
