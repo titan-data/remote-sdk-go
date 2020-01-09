@@ -15,6 +15,7 @@ func TestRegister(t *testing.T) {
 	Register(r)
 
 	res := Get("mock")
-	assert.Equal(t, "mock", res.Type())
+	typ, _ := res.Type()
+	assert.Equal(t, "mock", typ)
 	r.AssertExpectations(t)
 }

@@ -3,7 +3,14 @@
  */
 package remote
 
-import "net/url"
+import (
+	"fmt"
+	"github.com/hashicorp/go-hclog"
+	"github.com/hashicorp/go-plugin"
+	"net/url"
+	"os"
+	"os/exec"
+)
 
 /*
  * SDK for Titan remotes. Currently supports only client-side remote actions (parsing URIs and creating parameter
@@ -16,7 +23,7 @@ type Remote interface {
 	 * Returns the canonical name of this provider, such as "ssh" or "s3". This must be globally unique, and must
 	 * match the leading URI component (ssh://...).
 	 */
-	Type() string
+	Type() (string, error)
 
 	/*
 	 * Parse a URL and return the provider-specific remote parameters in structured form. These properties will be
@@ -48,7 +55,11 @@ var registeredRemotes = map[string]Remote{}
  * later be accessed via the Get() method.
  */
 func Register(remote Remote) {
-	registeredRemotes[remote.Type()] = remote
+	remoteType, error := remote.Type()
+	if error != nil {
+		panic(error)
+	}
+	registeredRemotes[remoteType] = remote
 }
 
 /*
@@ -63,4 +74,66 @@ func Get(remoteType string) Remote {
  */
 func Clear() {
 	registeredRemotes = map[string]Remote{}
+}
+
+var handshakeConfig = plugin.HandshakeConfig{
+	ProtocolVersion:  1,
+	MagicCookieKey:   "titan",
+	MagicCookieValue: "dba4fe2b-56ff-4a16-9bfc-bf651b8f12d6",
+}
+
+/*
+ * Run the remote as a plugin server, to be invoked from the main method of the remote implementation.
+ */
+func Serve(remoteType string) {
+	logger := hclog.New(&hclog.LoggerOptions{
+		Name:   "remote",
+		Output: os.Stdout,
+		Level:  hclog.Debug,
+	})
+
+	remote := Get(remoteType)
+	var pluginMap = map[string]plugin.Plugin {
+		"remote": &remotePlugin{Impl: remote},
+	}
+	plugin.Serve(&plugin.ServeConfig{
+		HandshakeConfig:  plugin.HandshakeConfig{},
+		Plugins:          pluginMap,
+		Logger:           logger,
+	})
+}
+
+/*
+ * Load a remote via the plugin interface. The caller should invoke the Kill() method on the client when complete.
+ */
+func Load(remoteType string, pluginPath string) (Remote, *plugin.Client, error) {
+	logger := hclog.New(&hclog.LoggerOptions{
+		Name:   "remote",
+		Output: os.Stdout,
+		Level:  hclog.Debug,
+	})
+
+	remote := Get(remoteType)
+	var pluginMap = map[string]plugin.Plugin {
+		"remote": &remotePlugin{Impl: remote},
+	}
+
+	client := plugin.NewClient(&plugin.ClientConfig{
+		HandshakeConfig: handshakeConfig,
+		Plugins: pluginMap,
+		Cmd: exec.Command(fmt.Sprintf("%s/%s", pluginPath, remoteType)),
+		Logger: logger,
+	})
+
+	rpcClient, err := client.Client()
+	if err != nil {
+		return nil, client, err
+	}
+
+	raw, err := rpcClient.Dispense("remote")
+	if err != nil {
+		return nil, client, err
+	}
+
+	return raw.(Remote), client, nil
 }
