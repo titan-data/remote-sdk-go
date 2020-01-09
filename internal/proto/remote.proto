@@ -1,0 +1,29 @@
+syntax = "proto3";
+package remote;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+
+message RemoteType {
+    string type = 1;
+}
+
+message ExtendedURL {
+    string url = 1;
+    map<string, string> values = 2;
+}
+
+message RemoteProperties {
+    google.protobuf.Struct values = 1;
+}
+
+message ParameterProperties {
+    google.protobuf.Struct values = 1;
+}
+
+service Remote {
+    rpc Type(google.protobuf.Empty) returns (RemoteType);
+    rpc FromURL(ExtendedURL) returns (RemoteProperties);
+    rpc ToURL(RemoteProperties) returns (ExtendedURL);
+    rpc GetParameters(RemoteProperties) returns (ParameterProperties);
+}

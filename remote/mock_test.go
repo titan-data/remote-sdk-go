@@ -5,22 +5,21 @@ package remote
 
 import (
 	"github.com/stretchr/testify/mock"
-	"net/url"
 )
 
 type MockRemote struct {
 	mock.Mock
 
-	u     *url.URL
+	u     string
 	props map[string]string
 }
 
-func (r *MockRemote) Type() string {
+func (r *MockRemote) Type() (string, error) {
 	args := r.Called()
-	return args.String(0)
+	return args.String(0), nil
 }
 
-func (r *MockRemote) FromURL(url *url.URL, additionalProperties map[string]string) (map[string]interface{}, error) {
+func (r *MockRemote) FromURL(url string, additionalProperties map[string]string) (map[string]interface{}, error) {
 	r.u = url
 	r.props = additionalProperties
 
