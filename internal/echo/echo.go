@@ -1,5 +1,7 @@
 package echo
 
+import "github.com/titan-data/remote-sdk-go/remote"
+
 type EchoRemote struct {
 }
 
@@ -27,4 +29,20 @@ func (m EchoRemote) ToURL(properties map[string]interface{}) (string, map[string
 
 func (m EchoRemote) GetParameters(remoteProperties map[string]interface{}) (map[string]interface{}, error) {
 	return remoteProperties, nil
+}
+
+func (m EchoRemote) ValidateRemote(properties map[string]interface{}) error {
+	return nil
+}
+
+func (m EchoRemote) ValidateParameters(parameters map[string]interface{}) error {
+	return nil
+}
+
+func (m EchoRemote) ListCommits(properties map[string]interface{}, parameters map[string]interface{}, tags []remote.Tag) ([]remote.Commit, error) {
+
+}
+
+func (m EchoRemote) GetCommit(properties map[string]interface{}, parameters map[string]interface{}, commitId string) (*remote.Commit, error) {
+	panic("implement me")
 }

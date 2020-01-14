@@ -12,9 +12,18 @@ import (
 )
 
 /*
- * SDK for Titan remotes. Currently supports only client-side remote actions (parsing URIs and creating parameter
- * objects).
+ * SDK for Titan remotes.
  */
+
+type Tag struct {
+	Key   string
+	Value *string
+}
+
+type Commit struct {
+	Id         string
+	Properties map[string]interface{}
+}
 
 type Remote interface {
 
@@ -46,6 +55,34 @@ type Remote interface {
 	 * can also interactively prompt the user for additional input (such as a password).
 	 */
 	GetParameters(properties map[string]interface{}) (map[string]interface{}, error)
+
+	/*
+	 * Validates the configuration of a remote, invoked by the server whenever a remote is passed as input or read
+	 * from the metadata store. This ensures that no malformed remotes are ever present.
+	 */
+	ValidateRemote(properties map[string]interface{}) error
+
+	/*
+	 * Validates the configuration of remote parameters.
+	 */
+	ValidateParameters(parameters map[string]interface{}) error
+
+	/*
+	 * Fetches a set of commits from the remote server. Commits are simply a tuple of (commitId, properties), with
+	 * some properties having semantic significance (namely timestamp and tags). The remote provider should always
+	 * return commits in reverse timestamp order, optionally filtered by the given tags. There are utility methods
+	 * in RemoteServerUtil if remotes don't provide this functionality server-side. Tags are specified as a list of
+	 * pairs, where the first element is always the key and the second is optionally the value.
+	 *
+	 * There is not yet support for pagination, though that will be added in the future to avoid having to fetch
+	 * the entire commit history every time.
+	 */
+	ListCommits(properties map[string]interface{}, parameters map[string]interface{}, tags []Tag) ([]Commit, error)
+
+	/**
+	 * Fetches a single commit from the given remote. Returns nil if no such commit exists.
+	 */
+	GetCommit(properties map[string]interface{}, parameters map[string]interface{}, commitId string) (*Commit, error)
 }
 
 type loadedRemote struct {
