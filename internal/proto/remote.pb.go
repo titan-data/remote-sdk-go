@@ -190,39 +190,427 @@ func (m *ParameterProperties) GetValues() *_struct.Struct {
 	return nil
 }
 
+type Tag struct {
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	// Types that are valid to be assigned to Value:
+	//	*Tag_ValueNull
+	//	*Tag_ValueString
+	Value                isTag_Value `protobuf_oneof:"value"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
+}
+
+func (m *Tag) Reset()         { *m = Tag{} }
+func (m *Tag) String() string { return proto.CompactTextString(m) }
+func (*Tag) ProtoMessage()    {}
+func (*Tag) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{4}
+}
+
+func (m *Tag) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Tag.Unmarshal(m, b)
+}
+func (m *Tag) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Tag.Marshal(b, m, deterministic)
+}
+func (m *Tag) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Tag.Merge(m, src)
+}
+func (m *Tag) XXX_Size() int {
+	return xxx_messageInfo_Tag.Size(m)
+}
+func (m *Tag) XXX_DiscardUnknown() {
+	xxx_messageInfo_Tag.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Tag proto.InternalMessageInfo
+
+func (m *Tag) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
+}
+
+type isTag_Value interface {
+	isTag_Value()
+}
+
+type Tag_ValueNull struct {
+	ValueNull bool `protobuf:"varint,2,opt,name=value_null,json=valueNull,proto3,oneof"`
+}
+
+type Tag_ValueString struct {
+	ValueString string `protobuf:"bytes,3,opt,name=value_string,json=valueString,proto3,oneof"`
+}
+
+func (*Tag_ValueNull) isTag_Value() {}
+
+func (*Tag_ValueString) isTag_Value() {}
+
+func (m *Tag) GetValue() isTag_Value {
+	if m != nil {
+		return m.Value
+	}
+	return nil
+}
+
+func (m *Tag) GetValueNull() bool {
+	if x, ok := m.GetValue().(*Tag_ValueNull); ok {
+		return x.ValueNull
+	}
+	return false
+}
+
+func (m *Tag) GetValueString() string {
+	if x, ok := m.GetValue().(*Tag_ValueString); ok {
+		return x.ValueString
+	}
+	return ""
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Tag) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*Tag_ValueNull)(nil),
+		(*Tag_ValueString)(nil),
+	}
+}
+
+type Commit struct {
+	Id                   string          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Properties           *_struct.Struct `protobuf:"bytes,2,opt,name=properties,proto3" json:"properties,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *Commit) Reset()         { *m = Commit{} }
+func (m *Commit) String() string { return proto.CompactTextString(m) }
+func (*Commit) ProtoMessage()    {}
+func (*Commit) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{5}
+}
+
+func (m *Commit) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Commit.Unmarshal(m, b)
+}
+func (m *Commit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Commit.Marshal(b, m, deterministic)
+}
+func (m *Commit) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Commit.Merge(m, src)
+}
+func (m *Commit) XXX_Size() int {
+	return xxx_messageInfo_Commit.Size(m)
+}
+func (m *Commit) XXX_DiscardUnknown() {
+	xxx_messageInfo_Commit.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Commit proto.InternalMessageInfo
+
+func (m *Commit) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *Commit) GetProperties() *_struct.Struct {
+	if m != nil {
+		return m.Properties
+	}
+	return nil
+}
+
+type GetCommitRequest struct {
+	Properties           *_struct.Struct `protobuf:"bytes,1,opt,name=properties,proto3" json:"properties,omitempty"`
+	Parameters           *_struct.Struct `protobuf:"bytes,2,opt,name=parameters,proto3" json:"parameters,omitempty"`
+	CommitId             string          `protobuf:"bytes,3,opt,name=commit_id,json=commitId,proto3" json:"commit_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *GetCommitRequest) Reset()         { *m = GetCommitRequest{} }
+func (m *GetCommitRequest) String() string { return proto.CompactTextString(m) }
+func (*GetCommitRequest) ProtoMessage()    {}
+func (*GetCommitRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{6}
+}
+
+func (m *GetCommitRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCommitRequest.Unmarshal(m, b)
+}
+func (m *GetCommitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCommitRequest.Marshal(b, m, deterministic)
+}
+func (m *GetCommitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCommitRequest.Merge(m, src)
+}
+func (m *GetCommitRequest) XXX_Size() int {
+	return xxx_messageInfo_GetCommitRequest.Size(m)
+}
+func (m *GetCommitRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCommitRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCommitRequest proto.InternalMessageInfo
+
+func (m *GetCommitRequest) GetProperties() *_struct.Struct {
+	if m != nil {
+		return m.Properties
+	}
+	return nil
+}
+
+func (m *GetCommitRequest) GetParameters() *_struct.Struct {
+	if m != nil {
+		return m.Parameters
+	}
+	return nil
+}
+
+func (m *GetCommitRequest) GetCommitId() string {
+	if m != nil {
+		return m.CommitId
+	}
+	return ""
+}
+
+type GetCommitResponse struct {
+	// Types that are valid to be assigned to Commit:
+	//	*GetCommitResponse_CommitNull
+	//	*GetCommitResponse_CommitValue
+	Commit               isGetCommitResponse_Commit `protobuf_oneof:"commit"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
+}
+
+func (m *GetCommitResponse) Reset()         { *m = GetCommitResponse{} }
+func (m *GetCommitResponse) String() string { return proto.CompactTextString(m) }
+func (*GetCommitResponse) ProtoMessage()    {}
+func (*GetCommitResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{7}
+}
+
+func (m *GetCommitResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCommitResponse.Unmarshal(m, b)
+}
+func (m *GetCommitResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCommitResponse.Marshal(b, m, deterministic)
+}
+func (m *GetCommitResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCommitResponse.Merge(m, src)
+}
+func (m *GetCommitResponse) XXX_Size() int {
+	return xxx_messageInfo_GetCommitResponse.Size(m)
+}
+func (m *GetCommitResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCommitResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCommitResponse proto.InternalMessageInfo
+
+type isGetCommitResponse_Commit interface {
+	isGetCommitResponse_Commit()
+}
+
+type GetCommitResponse_CommitNull struct {
+	CommitNull bool `protobuf:"varint,1,opt,name=commit_null,json=commitNull,proto3,oneof"`
+}
+
+type GetCommitResponse_CommitValue struct {
+	CommitValue *Commit `protobuf:"bytes,2,opt,name=commit_value,json=commitValue,proto3,oneof"`
+}
+
+func (*GetCommitResponse_CommitNull) isGetCommitResponse_Commit() {}
+
+func (*GetCommitResponse_CommitValue) isGetCommitResponse_Commit() {}
+
+func (m *GetCommitResponse) GetCommit() isGetCommitResponse_Commit {
+	if m != nil {
+		return m.Commit
+	}
+	return nil
+}
+
+func (m *GetCommitResponse) GetCommitNull() bool {
+	if x, ok := m.GetCommit().(*GetCommitResponse_CommitNull); ok {
+		return x.CommitNull
+	}
+	return false
+}
+
+func (m *GetCommitResponse) GetCommitValue() *Commit {
+	if x, ok := m.GetCommit().(*GetCommitResponse_CommitValue); ok {
+		return x.CommitValue
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*GetCommitResponse) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*GetCommitResponse_CommitNull)(nil),
+		(*GetCommitResponse_CommitValue)(nil),
+	}
+}
+
+type ListCommitRequest struct {
+	Properties           *_struct.Struct `protobuf:"bytes,1,opt,name=properties,proto3" json:"properties,omitempty"`
+	Paramegers           *_struct.Struct `protobuf:"bytes,2,opt,name=paramegers,proto3" json:"paramegers,omitempty"`
+	Tags                 []*Tag          `protobuf:"bytes,3,rep,name=tags,proto3" json:"tags,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ListCommitRequest) Reset()         { *m = ListCommitRequest{} }
+func (m *ListCommitRequest) String() string { return proto.CompactTextString(m) }
+func (*ListCommitRequest) ProtoMessage()    {}
+func (*ListCommitRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{8}
+}
+
+func (m *ListCommitRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListCommitRequest.Unmarshal(m, b)
+}
+func (m *ListCommitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListCommitRequest.Marshal(b, m, deterministic)
+}
+func (m *ListCommitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListCommitRequest.Merge(m, src)
+}
+func (m *ListCommitRequest) XXX_Size() int {
+	return xxx_messageInfo_ListCommitRequest.Size(m)
+}
+func (m *ListCommitRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListCommitRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListCommitRequest proto.InternalMessageInfo
+
+func (m *ListCommitRequest) GetProperties() *_struct.Struct {
+	if m != nil {
+		return m.Properties
+	}
+	return nil
+}
+
+func (m *ListCommitRequest) GetParamegers() *_struct.Struct {
+	if m != nil {
+		return m.Paramegers
+	}
+	return nil
+}
+
+func (m *ListCommitRequest) GetTags() []*Tag {
+	if m != nil {
+		return m.Tags
+	}
+	return nil
+}
+
+type ListCommitResponse struct {
+	Commits              []*Commit `protobuf:"bytes,1,rep,name=commits,proto3" json:"commits,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *ListCommitResponse) Reset()         { *m = ListCommitResponse{} }
+func (m *ListCommitResponse) String() string { return proto.CompactTextString(m) }
+func (*ListCommitResponse) ProtoMessage()    {}
+func (*ListCommitResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{9}
+}
+
+func (m *ListCommitResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListCommitResponse.Unmarshal(m, b)
+}
+func (m *ListCommitResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListCommitResponse.Marshal(b, m, deterministic)
+}
+func (m *ListCommitResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListCommitResponse.Merge(m, src)
+}
+func (m *ListCommitResponse) XXX_Size() int {
+	return xxx_messageInfo_ListCommitResponse.Size(m)
+}
+func (m *ListCommitResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListCommitResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListCommitResponse proto.InternalMessageInfo
+
+func (m *ListCommitResponse) GetCommits() []*Commit {
+	if m != nil {
+		return m.Commits
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*RemoteType)(nil), "remote.RemoteType")
 	proto.RegisterType((*ExtendedURL)(nil), "remote.ExtendedURL")
 	proto.RegisterMapType((map[string]string)(nil), "remote.ExtendedURL.ValuesEntry")
 	proto.RegisterType((*RemoteProperties)(nil), "remote.RemoteProperties")
 	proto.RegisterType((*ParameterProperties)(nil), "remote.ParameterProperties")
+	proto.RegisterType((*Tag)(nil), "remote.Tag")
+	proto.RegisterType((*Commit)(nil), "remote.Commit")
+	proto.RegisterType((*GetCommitRequest)(nil), "remote.GetCommitRequest")
+	proto.RegisterType((*GetCommitResponse)(nil), "remote.GetCommitResponse")
+	proto.RegisterType((*ListCommitRequest)(nil), "remote.ListCommitRequest")
+	proto.RegisterType((*ListCommitResponse)(nil), "remote.ListCommitResponse")
 }
 
 func init() { proto.RegisterFile("remote.proto", fileDescriptor_eefc82927d57d89b) }
 
 var fileDescriptor_eefc82927d57d89b = []byte{
-	// 321 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x51, 0x4d, 0x4b, 0xc3, 0x40,
-	0x14, 0x24, 0xfd, 0x88, 0xf8, 0xa2, 0x50, 0xb6, 0xa2, 0x61, 0x2b, 0x58, 0x72, 0xea, 0x69, 0x0b,
-	0x11, 0xb4, 0x7a, 0x95, 0xd6, 0x8b, 0x87, 0x12, 0xab, 0xf7, 0xd4, 0x3e, 0x8b, 0x34, 0xe9, 0x86,
-	0xcd, 0x46, 0xdc, 0xdf, 0xe1, 0x7f, 0xf5, 0x2c, 0xbb, 0x9b, 0x94, 0xa8, 0xd1, 0x8b, 0xb7, 0x7d,
-	0xef, 0xcd, 0x4c, 0x66, 0x26, 0x70, 0x20, 0x30, 0xe5, 0x12, 0x59, 0x26, 0xb8, 0xe4, 0xc4, 0xb5,
-	0x13, 0x1d, 0xac, 0x39, 0x5f, 0x27, 0x38, 0x36, 0xdb, 0x65, 0xf1, 0x3c, 0xc6, 0x34, 0x93, 0xca,
-	0x82, 0xe8, 0xe9, 0xf7, 0x63, 0x2e, 0x45, 0xf1, 0x24, 0xed, 0x35, 0x18, 0x02, 0x44, 0x46, 0x64,
-	0xa1, 0x32, 0x24, 0x04, 0x3a, 0x52, 0x65, 0xe8, 0x3b, 0x43, 0x67, 0xb4, 0x1f, 0x99, 0x77, 0xf0,
-	0xee, 0x80, 0x37, 0x7d, 0x93, 0xb8, 0x5d, 0xe1, 0xea, 0x21, 0xba, 0x23, 0x3d, 0x68, 0x17, 0x22,
-	0x29, 0x21, 0xfa, 0x49, 0x2e, 0xc1, 0x7d, 0x8d, 0x93, 0x02, 0x73, 0xbf, 0x35, 0x6c, 0x8f, 0xbc,
-	0xf0, 0x8c, 0x95, 0x2e, 0x6b, 0x34, 0xf6, 0x68, 0x10, 0xd3, 0xad, 0x14, 0x2a, 0x2a, 0xe1, 0xf4,
-	0x0a, 0xbc, 0xda, 0x5a, 0x2b, 0x6f, 0x50, 0x55, 0xca, 0x1b, 0x54, 0xe4, 0x08, 0xba, 0x06, 0xea,
-	0xb7, 0xcc, 0xce, 0x0e, 0xd7, 0xad, 0x89, 0x13, 0xdc, 0x40, 0xcf, 0xfa, 0x9e, 0x0b, 0x9e, 0xa1,
-	0x90, 0x2f, 0x98, 0x93, 0xf1, 0xce, 0x87, 0x96, 0xf0, 0xc2, 0x13, 0x66, 0xa3, 0xb3, 0x2a, 0x3a,
-	0xbb, 0x37, 0xd1, 0xab, 0xef, 0x07, 0x33, 0xe8, 0xcf, 0x63, 0x11, 0xa7, 0x28, 0x51, 0xfc, 0x43,
-	0x27, 0xfc, 0x70, 0xc0, 0xb5, 0x6e, 0x48, 0x08, 0x1d, 0xd3, 0xe4, 0xf1, 0x0f, 0xce, 0x54, 0xff,
-	0x13, 0x4a, 0xaa, 0x6e, 0x6a, 0xad, 0x4f, 0x60, 0x6f, 0x26, 0x78, 0xaa, 0xcb, 0xed, 0x37, 0x54,
-	0x47, 0xfd, 0xaf, 0x9c, 0x9a, 0xd3, 0x0b, 0xe8, 0x2e, 0xb8, 0xe6, 0xfd, 0x0a, 0xa1, 0x4d, 0x8a,
-	0x64, 0x06, 0x87, 0xb7, 0x28, 0x77, 0xd9, 0xf3, 0x3f, 0xf8, 0x83, 0xea, 0xd2, 0xd0, 0xd4, 0xd2,
-	0x35, 0xe9, 0xce, 0x3f, 0x03, 0x00, 0x00, 0xff, 0xff, 0x33, 0xf0, 0x33, 0x94, 0x97, 0x02, 0x00,
-	0x00,
+	// 616 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0x41, 0x6f, 0x9b, 0x4c,
+	0x10, 0x0d, 0xc6, 0x21, 0xf1, 0xe0, 0xcf, 0x72, 0x36, 0x9f, 0x5a, 0x82, 0x2b, 0xd9, 0xa5, 0x17,
+	0x9f, 0xb0, 0xe4, 0x48, 0x4d, 0xda, 0x43, 0x55, 0x39, 0xb5, 0x93, 0x48, 0x51, 0xe5, 0x12, 0x37,
+	0xd7, 0x88, 0x84, 0x0d, 0x42, 0x01, 0x43, 0x61, 0xa9, 0xca, 0x8f, 0xe8, 0xa9, 0xbf, 0xa0, 0x97,
+	0xfe, 0xce, 0x8a, 0x59, 0xd6, 0xa6, 0x36, 0x8e, 0x2c, 0xb5, 0x37, 0x76, 0xe6, 0xcd, 0xdb, 0x37,
+	0x8f, 0x99, 0x85, 0x66, 0x4c, 0x83, 0x90, 0x51, 0x33, 0x8a, 0x43, 0x16, 0x12, 0x85, 0x9f, 0xf4,
+	0x8e, 0x1b, 0x86, 0xae, 0x4f, 0x07, 0x18, 0xbd, 0x4b, 0x1f, 0x06, 0x34, 0x88, 0x58, 0xc6, 0x41,
+	0xfa, 0x8b, 0xd5, 0x64, 0xc2, 0xe2, 0xf4, 0x9e, 0xf1, 0xac, 0xd1, 0x03, 0xb0, 0x90, 0x64, 0x96,
+	0x45, 0x94, 0x10, 0xa8, 0xb3, 0x2c, 0xa2, 0x9a, 0xd4, 0x93, 0xfa, 0x0d, 0x0b, 0xbf, 0x8d, 0x1f,
+	0x12, 0xa8, 0xe3, 0x6f, 0x8c, 0xce, 0x1d, 0xea, 0x7c, 0xb6, 0xae, 0x48, 0x1b, 0xe4, 0x34, 0xf6,
+	0x0b, 0x48, 0xfe, 0x49, 0x4e, 0x40, 0xf9, 0x6a, 0xfb, 0x29, 0x4d, 0xb4, 0x5a, 0x4f, 0xee, 0xab,
+	0xc3, 0xae, 0x59, 0xa8, 0x2c, 0x95, 0x99, 0x37, 0x88, 0x18, 0xcf, 0x59, 0x9c, 0x59, 0x05, 0x5c,
+	0x7f, 0x03, 0x6a, 0x29, 0x9c, 0x33, 0x3f, 0xd2, 0x4c, 0x30, 0x3f, 0xd2, 0x8c, 0xfc, 0x0f, 0xbb,
+	0x08, 0xd5, 0x6a, 0x18, 0xe3, 0x87, 0xb7, 0xb5, 0x53, 0xc9, 0x38, 0x83, 0x36, 0xd7, 0x3d, 0x8d,
+	0xc3, 0x88, 0xc6, 0xcc, 0xa3, 0x09, 0x19, 0x2c, 0x74, 0xe4, 0x14, 0xea, 0xf0, 0xb9, 0xc9, 0x5b,
+	0x37, 0x45, 0xeb, 0xe6, 0x35, 0xb6, 0x2e, 0xee, 0x37, 0x26, 0x70, 0x38, 0xb5, 0x63, 0x3b, 0xa0,
+	0x8c, 0xc6, 0x7f, 0xc3, 0xf3, 0x00, 0xf2, 0xcc, 0x76, 0x2b, 0xf4, 0x77, 0x01, 0x10, 0x72, 0x3b,
+	0x4f, 0x7d, 0x1f, 0x9b, 0xd8, 0xbf, 0xd8, 0xb1, 0x1a, 0x18, 0xfb, 0x98, 0xfa, 0x3e, 0x79, 0x05,
+	0x4d, 0x0e, 0x48, 0x58, 0xec, 0xcd, 0x5d, 0x4d, 0xce, 0x6b, 0x2f, 0x76, 0x2c, 0x15, 0xa3, 0xd7,
+	0x18, 0x1c, 0xed, 0x15, 0x2e, 0x18, 0x9f, 0x40, 0x39, 0x0b, 0x83, 0xc0, 0x63, 0xa4, 0x05, 0x35,
+	0xcf, 0x29, 0x6e, 0xaa, 0x79, 0x0e, 0x39, 0x01, 0x88, 0x16, 0x0d, 0xe0, 0x45, 0x4f, 0xc8, 0x2e,
+	0x41, 0x8d, 0x9f, 0x12, 0xb4, 0xcf, 0x29, 0xe3, 0xb4, 0x16, 0xfd, 0x92, 0xd2, 0x84, 0xad, 0xb0,
+	0x49, 0x5b, 0xb3, 0x61, 0xa1, 0x30, 0x74, 0x0b, 0x19, 0x0b, 0x28, 0xe9, 0x40, 0xe3, 0x1e, 0x25,
+	0xdc, 0x7a, 0x0e, 0x37, 0xc1, 0xda, 0xe7, 0x81, 0x4b, 0xc7, 0x48, 0xe1, 0xa0, 0x24, 0x31, 0x89,
+	0xc2, 0x79, 0x42, 0xc9, 0x4b, 0x50, 0x8b, 0x0a, 0xf4, 0x56, 0x2a, 0xbc, 0x05, 0x1e, 0x44, 0x73,
+	0x8f, 0xa1, 0x59, 0x40, 0x96, 0x43, 0xa4, 0x0e, 0x5b, 0x62, 0x3a, 0x39, 0x61, 0x6e, 0x36, 0x47,
+	0xe1, 0x28, 0x8e, 0xf6, 0x41, 0xe1, 0x47, 0xe3, 0x97, 0x04, 0x07, 0x57, 0x5e, 0xf2, 0xcf, 0xbd,
+	0x71, 0xb7, 0xf7, 0x26, 0x87, 0x92, 0x2e, 0xd4, 0x99, 0xed, 0x26, 0x9a, 0x8c, 0xcb, 0xa5, 0x0a,
+	0xf9, 0x33, 0xdb, 0xb5, 0x30, 0x61, 0xbc, 0x03, 0x52, 0xd6, 0x59, 0x18, 0xd4, 0x87, 0x3d, 0xde,
+	0x48, 0xae, 0x52, 0x5e, 0x6f, 0xdc, 0x12, 0xe9, 0xe1, 0xf7, 0x3a, 0x28, 0x7c, 0x99, 0xc8, 0x10,
+	0xea, 0xf8, 0x10, 0x3c, 0x5b, 0x13, 0x36, 0xce, 0x9f, 0x14, 0x9d, 0x08, 0x8e, 0xd2, 0xa3, 0x71,
+	0x0a, 0x7b, 0x93, 0x38, 0x0c, 0xf2, 0xb7, 0xe1, 0xb0, 0x62, 0xf3, 0x75, 0xed, 0xcf, 0x9a, 0xd2,
+	0xa2, 0xbd, 0x86, 0xdd, 0x59, 0x98, 0xd7, 0x6d, 0x84, 0xe8, 0x55, 0x8c, 0x64, 0x02, 0xff, 0x9d,
+	0x53, 0x36, 0x5d, 0x8e, 0xcf, 0xe6, 0xfa, 0x8e, 0xc8, 0x54, 0x2d, 0xfa, 0x08, 0x5a, 0x37, 0xb6,
+	0xef, 0x39, 0x36, 0xa3, 0x45, 0xff, 0x9b, 0x89, 0x36, 0x38, 0x42, 0x2e, 0x81, 0x08, 0x8e, 0x92,
+	0xa0, 0xa7, 0xae, 0xdd, 0x48, 0xf5, 0x01, 0xd4, 0xe5, 0x7f, 0x4c, 0xc8, 0x91, 0xe0, 0x58, 0x1b,
+	0x42, 0x5d, 0xaf, 0x4a, 0x15, 0xff, 0xfd, 0x3d, 0x34, 0x16, 0xdb, 0xb2, 0xec, 0x67, 0x75, 0xc7,
+	0xf5, 0xa3, 0x8a, 0x0c, 0x67, 0xb8, 0x53, 0x50, 0xd7, 0xf1, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0x07, 0x22, 0x8b, 0x92, 0x6d, 0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -241,6 +629,10 @@ type RemoteClient interface {
 	FromURL(ctx context.Context, in *ExtendedURL, opts ...grpc.CallOption) (*RemoteProperties, error)
 	ToURL(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*ExtendedURL, error)
 	GetParameters(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*ParameterProperties, error)
+	ValidateRemote(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*empty.Empty, error)
+	ValidateParameters(ctx context.Context, in *ParameterProperties, opts ...grpc.CallOption) (*empty.Empty, error)
+	ListCommits(ctx context.Context, in *ListCommitRequest, opts ...grpc.CallOption) (*ListCommitResponse, error)
+	GetCommit(ctx context.Context, in *GetCommitRequest, opts ...grpc.CallOption) (*GetCommitResponse, error)
 }
 
 type remoteClient struct {
@@ -287,12 +679,52 @@ func (c *remoteClient) GetParameters(ctx context.Context, in *RemoteProperties, 
 	return out, nil
 }
 
+func (c *remoteClient) ValidateRemote(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/remote.Remote/ValidateRemote", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *remoteClient) ValidateParameters(ctx context.Context, in *ParameterProperties, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/remote.Remote/ValidateParameters", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *remoteClient) ListCommits(ctx context.Context, in *ListCommitRequest, opts ...grpc.CallOption) (*ListCommitResponse, error) {
+	out := new(ListCommitResponse)
+	err := c.cc.Invoke(ctx, "/remote.Remote/ListCommits", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *remoteClient) GetCommit(ctx context.Context, in *GetCommitRequest, opts ...grpc.CallOption) (*GetCommitResponse, error) {
+	out := new(GetCommitResponse)
+	err := c.cc.Invoke(ctx, "/remote.Remote/GetCommit", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RemoteServer is the server API for Remote service.
 type RemoteServer interface {
 	Type(context.Context, *empty.Empty) (*RemoteType, error)
 	FromURL(context.Context, *ExtendedURL) (*RemoteProperties, error)
 	ToURL(context.Context, *RemoteProperties) (*ExtendedURL, error)
 	GetParameters(context.Context, *RemoteProperties) (*ParameterProperties, error)
+	ValidateRemote(context.Context, *RemoteProperties) (*empty.Empty, error)
+	ValidateParameters(context.Context, *ParameterProperties) (*empty.Empty, error)
+	ListCommits(context.Context, *ListCommitRequest) (*ListCommitResponse, error)
+	GetCommit(context.Context, *GetCommitRequest) (*GetCommitResponse, error)
 }
 
 // UnimplementedRemoteServer can be embedded to have forward compatible implementations.
@@ -310,6 +742,18 @@ func (*UnimplementedRemoteServer) ToURL(ctx context.Context, req *RemoteProperti
 }
 func (*UnimplementedRemoteServer) GetParameters(ctx context.Context, req *RemoteProperties) (*ParameterProperties, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetParameters not implemented")
+}
+func (*UnimplementedRemoteServer) ValidateRemote(ctx context.Context, req *RemoteProperties) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateRemote not implemented")
+}
+func (*UnimplementedRemoteServer) ValidateParameters(ctx context.Context, req *ParameterProperties) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateParameters not implemented")
+}
+func (*UnimplementedRemoteServer) ListCommits(ctx context.Context, req *ListCommitRequest) (*ListCommitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCommits not implemented")
+}
+func (*UnimplementedRemoteServer) GetCommit(ctx context.Context, req *GetCommitRequest) (*GetCommitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCommit not implemented")
 }
 
 func RegisterRemoteServer(s *grpc.Server, srv RemoteServer) {
@@ -388,6 +832,78 @@ func _Remote_GetParameters_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Remote_ValidateRemote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoteProperties)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RemoteServer).ValidateRemote(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/remote.Remote/ValidateRemote",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RemoteServer).ValidateRemote(ctx, req.(*RemoteProperties))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Remote_ValidateParameters_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParameterProperties)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RemoteServer).ValidateParameters(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/remote.Remote/ValidateParameters",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RemoteServer).ValidateParameters(ctx, req.(*ParameterProperties))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Remote_ListCommits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCommitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RemoteServer).ListCommits(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/remote.Remote/ListCommits",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RemoteServer).ListCommits(ctx, req.(*ListCommitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Remote_GetCommit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCommitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RemoteServer).GetCommit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/remote.Remote/GetCommit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RemoteServer).GetCommit(ctx, req.(*GetCommitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Remote_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "remote.Remote",
 	HandlerType: (*RemoteServer)(nil),
@@ -407,6 +923,22 @@ var _Remote_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetParameters",
 			Handler:    _Remote_GetParameters_Handler,
+		},
+		{
+			MethodName: "ValidateRemote",
+			Handler:    _Remote_ValidateRemote_Handler,
+		},
+		{
+			MethodName: "ValidateParameters",
+			Handler:    _Remote_ValidateParameters_Handler,
+		},
+		{
+			MethodName: "ListCommits",
+			Handler:    _Remote_ListCommits_Handler,
+		},
+		{
+			MethodName: "GetCommit",
+			Handler:    _Remote_GetCommit_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

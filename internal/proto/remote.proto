@@ -21,9 +21,49 @@ message ParameterProperties {
     google.protobuf.Struct values = 1;
 }
 
+message Tag {
+    string key = 1;
+    oneof value {
+        bool value_null = 2;
+        string value_string = 3;
+    }
+}
+
+message Commit {
+    string id = 1;
+    google.protobuf.Struct properties = 2;
+}
+
+message GetCommitRequest {
+    google.protobuf.Struct properties = 1;
+    google.protobuf.Struct parameters = 2;
+    string commit_id = 3;
+}
+
+message GetCommitResponse {
+    oneof commit {
+        bool commit_null = 1;
+        Commit commit_value = 2;
+    }
+}
+
+message ListCommitRequest {
+    google.protobuf.Struct properties = 1;
+    google.protobuf.Struct paramegers = 2;
+    repeated Tag tags = 3;
+}
+
+message ListCommitResponse {
+    repeated Commit commits = 1;
+}
+
 service Remote {
     rpc Type(google.protobuf.Empty) returns (RemoteType);
     rpc FromURL(ExtendedURL) returns (RemoteProperties);
     rpc ToURL(RemoteProperties) returns (ExtendedURL);
     rpc GetParameters(RemoteProperties) returns (ParameterProperties);
+    rpc ValidateRemote(RemoteProperties) returns (google.protobuf.Empty);
+    rpc ValidateParameters(ParameterProperties) returns (google.protobuf.Empty);
+    rpc ListCommits(ListCommitRequest) returns (ListCommitResponse);
+    rpc GetCommit(GetCommitRequest) returns (GetCommitResponse);
 }
