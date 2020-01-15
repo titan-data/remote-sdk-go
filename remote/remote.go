@@ -4,9 +4,12 @@
 package remote
 
 import (
+	"context"
 	"fmt"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
+	"github.com/titan-data/remote-sdk-go/internal/proto"
+	"google.golang.org/grpc"
 	"os"
 	"os/exec"
 )
@@ -85,6 +88,20 @@ type Remote interface {
 	GetCommit(properties map[string]interface{}, parameters map[string]interface{}, commitId string) (*Commit, error)
 }
 
+type remotePlugin struct {
+	plugin.NetRPCUnsupportedPlugin
+	Impl Remote
+}
+
+func (p *remotePlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
+	remote.RegisterRemoteServer(s, &remoteRPCServer{Impl: p.Impl})
+	return nil
+}
+
+func (remotePlugin) GRPCClient(ctx context.Context, broker *plugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
+	return &remoteRPCClient{Client: remote.NewRemoteClient(c)}, nil
+}
+
 type loadedRemote struct {
 	r Remote
 	c *plugin.Client
@@ -133,14 +150,22 @@ var handshakeConfig = plugin.HandshakeConfig{
  * Run the remote as a plugin server, to be invoked from the main method of the remote implementation.
  */
 func Serve(remoteType string) {
+	logger := hclog.New(&hclog.LoggerOptions{
+		Name:   "remote",
+		Output: os.Stdout,
+		Level:  hclog.Error,
+	})
+
 	remote := Get(remoteType)
 	var pluginMap = map[string]plugin.Plugin{
 		"remote": &remotePlugin{Impl: remote},
 	}
+
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: handshakeConfig,
 		Plugins:         pluginMap,
 		GRPCServer:      plugin.DefaultGRPCServer,
+		Logger:          logger,
 	})
 }
 
