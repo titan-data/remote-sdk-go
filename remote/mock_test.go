@@ -36,3 +36,23 @@ func (r *MockRemote) GetParameters(remoteProperties map[string]interface{}) (map
 	args := r.Called(remoteProperties)
 	return args.Get(0).(map[string]interface{}), args.Error(1)
 }
+
+func (r *MockRemote) ValidateRemote(properties map[string]interface{}) error {
+	args := r.Called(properties)
+	return args.Error(0)
+}
+
+func (r *MockRemote) ValidateParameters(parameters map[string]interface{}) error {
+	args := r.Called(parameters)
+	return args.Error(0)
+}
+
+func (r *MockRemote) ListCommits(properties map[string]interface{}, parameters map[string]interface{}, tags []Tag) ([]Commit, error) {
+	args := r.Called(properties, parameters, tags)
+	return args.Get(0).([]Commit), args.Error(1)
+}
+
+func (r *MockRemote) GetCommit(properties map[string]interface{}, parameters map[string]interface{}, commitId string) (*Commit, error) {
+	args := r.Called(properties, parameters, commitId)
+	return args.Get(0).(*Commit), args.Error(1)
+}

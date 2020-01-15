@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"sort"
+	"time"
 )
 
 /*
@@ -50,4 +52,93 @@ func ParseURL(input string, properties map[string]string) (string, map[string]in
 	}
 
 	return provider, props, tags, commit, nil
+}
+
+func contains(arr []string, search string) bool {
+	for _, v := range arr {
+		if v == search {
+			return true
+		}
+	}
+	return false
+}
+
+var epoch = time.Unix(0, 0)
+
+func getTimestamp(raw interface{}) time.Time {
+	var ts string
+	var ok bool
+	if ts, ok = raw.(string); ok {
+		if ts == "" {
+			return epoch
+		} else {
+			t, err := time.Parse(time.RFC3339, ts)
+			if err != nil {
+				return epoch
+			} else {
+				return t
+			}
+		}
+	} else {
+		return epoch
+	}
+}
+
+/**
+ * Sorts a list of commits in reverse descending order, based on timestamp.
+ */
+func SortCommits(commits []Commit) {
+	sort.Slice(commits, func(i, j int) bool {
+		t1 := getTimestamp(commits[i].Properties["timestamp"])
+		t2 := getTimestamp(commits[j].Properties["timestamp"])
+		return t1.After(t2)
+	})
+}
+
+/*
+ * Validate a set of properties (as with remotes and parameters) for required and optional fields.
+ */
+func ValidateFields(properties map[string]interface{}, required []string, optional []string) error {
+	for _, p := range required {
+		if _, ok := properties[p]; !ok {
+			return fmt.Errorf("missing required property '%s'", p)
+		}
+	}
+
+	for p := range properties {
+		if !contains(required, p) && !contains(optional, p) {
+			return fmt.Errorf("invalid property '%s'", p)
+		}
+	}
+
+	return nil
+}
+
+/*
+ * Match a commit against a set of tags. Returns true if the commit matches the given tags, false otherwise.
+ */
+func MatchTags(commit map[string]interface{}, query []Tag) bool {
+	// No tags always matches
+	if len(query) == 0 {
+		return true
+	}
+
+	var ok bool
+	var tags map[string]string
+	if tags, ok = commit["tags"].(map[string]string); !ok {
+		return false
+	}
+
+	for _, t := range query {
+		var v string
+		if v, ok = tags[t.Key]; !ok {
+			return false
+		}
+
+		if t.Value != nil && v != *t.Value {
+			return false
+		}
+	}
+
+	return true
 }
