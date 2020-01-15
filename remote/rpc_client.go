@@ -137,7 +137,7 @@ func (r remoteRPCClient) GetCommit(properties map[string]interface{}, parameters
 		return nil, err
 	}
 	input := proto.GetCommitRequest{
-		Properties: remote,
+		Remote:     remote,
 		Parameters: params,
 		CommitId:   commitId,
 	}

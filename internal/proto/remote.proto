@@ -76,7 +76,7 @@ message Commit {
 }
 
 message GetCommitRequest {
-    google.protobuf.Struct properties = 1;
+    google.protobuf.Struct remote = 1;
     google.protobuf.Struct parameters = 2;
     string commit_id = 3;
 }

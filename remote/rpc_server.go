@@ -119,7 +119,7 @@ func (r *remoteRPCServer) ListCommits(ctx context.Context, req *proto.ListCommit
 }
 
 func (r *remoteRPCServer) GetCommit(ctx context.Context, req *proto.GetCommitRequest) (*proto.GetCommitResponse, error) {
-	remote, err := util.Struct2Map(req.Properties)
+	remote, err := util.Struct2Map(req.Remote)
 	if err != nil {
 		return nil, err
 	}
