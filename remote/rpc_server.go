@@ -81,7 +81,7 @@ func (r *remoteRPCServer) ValidateParameters(ctx context.Context, req *proto.Val
 }
 
 func (r *remoteRPCServer) ListCommits(ctx context.Context, req *proto.ListCommitRequest) (*proto.ListCommitResponse, error) {
-	remote, err := util.Struct2Map(req.Properties)
+	remote, err := util.Struct2Map(req.Remote)
 	if err != nil {
 		return nil, err
 	}

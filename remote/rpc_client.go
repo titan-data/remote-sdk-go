@@ -105,7 +105,7 @@ func (r remoteRPCClient) ListCommits(properties map[string]interface{}, paramete
 		}
 	}
 	input := proto.ListCommitRequest{
-		Properties: remote,
+		Remote:     remote,
 		Parameters: params,
 		Tags:       rpcTags,
 	}

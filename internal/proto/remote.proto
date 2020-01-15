@@ -89,7 +89,7 @@ message GetCommitResponse {
 }
 
 message ListCommitRequest {
-    google.protobuf.Struct properties = 1;
+    google.protobuf.Struct remote = 1;
     google.protobuf.Struct parameters = 2;
     repeated Tag tags = 3;
 }
