@@ -85,7 +85,7 @@ func (r *remoteRPCServer) ListCommits(ctx context.Context, req *proto.ListCommit
 	if err != nil {
 		return nil, err
 	}
-	params, err := util.Struct2Map(req.Paramegers)
+	params, err := util.Struct2Map(req.Parameters)
 	if err != nil {
 		return nil, err
 	}
