@@ -7,7 +7,6 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	_struct "github.com/golang/protobuf/ptypes/struct"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -26,169 +25,465 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type RemoteType struct {
+type GetTypeRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetTypeRequest) Reset()         { *m = GetTypeRequest{} }
+func (m *GetTypeRequest) String() string { return proto.CompactTextString(m) }
+func (*GetTypeRequest) ProtoMessage()    {}
+func (*GetTypeRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{0}
+}
+
+func (m *GetTypeRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetTypeRequest.Unmarshal(m, b)
+}
+func (m *GetTypeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetTypeRequest.Marshal(b, m, deterministic)
+}
+func (m *GetTypeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetTypeRequest.Merge(m, src)
+}
+func (m *GetTypeRequest) XXX_Size() int {
+	return xxx_messageInfo_GetTypeRequest.Size(m)
+}
+func (m *GetTypeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetTypeRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetTypeRequest proto.InternalMessageInfo
+
+type GetTypeResponse struct {
 	Type                 string   `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RemoteType) Reset()         { *m = RemoteType{} }
-func (m *RemoteType) String() string { return proto.CompactTextString(m) }
-func (*RemoteType) ProtoMessage()    {}
-func (*RemoteType) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{0}
+func (m *GetTypeResponse) Reset()         { *m = GetTypeResponse{} }
+func (m *GetTypeResponse) String() string { return proto.CompactTextString(m) }
+func (*GetTypeResponse) ProtoMessage()    {}
+func (*GetTypeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{1}
 }
 
-func (m *RemoteType) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RemoteType.Unmarshal(m, b)
+func (m *GetTypeResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetTypeResponse.Unmarshal(m, b)
 }
-func (m *RemoteType) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RemoteType.Marshal(b, m, deterministic)
+func (m *GetTypeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetTypeResponse.Marshal(b, m, deterministic)
 }
-func (m *RemoteType) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RemoteType.Merge(m, src)
+func (m *GetTypeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetTypeResponse.Merge(m, src)
 }
-func (m *RemoteType) XXX_Size() int {
-	return xxx_messageInfo_RemoteType.Size(m)
+func (m *GetTypeResponse) XXX_Size() int {
+	return xxx_messageInfo_GetTypeResponse.Size(m)
 }
-func (m *RemoteType) XXX_DiscardUnknown() {
-	xxx_messageInfo_RemoteType.DiscardUnknown(m)
+func (m *GetTypeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetTypeResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_RemoteType proto.InternalMessageInfo
+var xxx_messageInfo_GetTypeResponse proto.InternalMessageInfo
 
-func (m *RemoteType) GetType() string {
+func (m *GetTypeResponse) GetType() string {
 	if m != nil {
 		return m.Type
 	}
 	return ""
 }
 
-type ExtendedURL struct {
+type FromURLRequest struct {
 	Url                  string            `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
-	Values               map[string]string `protobuf:"bytes,2,rep,name=values,proto3" json:"values,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Properties           map[string]string `protobuf:"bytes,2,rep,name=properties,proto3" json:"properties,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *ExtendedURL) Reset()         { *m = ExtendedURL{} }
-func (m *ExtendedURL) String() string { return proto.CompactTextString(m) }
-func (*ExtendedURL) ProtoMessage()    {}
-func (*ExtendedURL) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{1}
+func (m *FromURLRequest) Reset()         { *m = FromURLRequest{} }
+func (m *FromURLRequest) String() string { return proto.CompactTextString(m) }
+func (*FromURLRequest) ProtoMessage()    {}
+func (*FromURLRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{2}
 }
 
-func (m *ExtendedURL) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ExtendedURL.Unmarshal(m, b)
+func (m *FromURLRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FromURLRequest.Unmarshal(m, b)
 }
-func (m *ExtendedURL) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ExtendedURL.Marshal(b, m, deterministic)
+func (m *FromURLRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FromURLRequest.Marshal(b, m, deterministic)
 }
-func (m *ExtendedURL) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ExtendedURL.Merge(m, src)
+func (m *FromURLRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FromURLRequest.Merge(m, src)
 }
-func (m *ExtendedURL) XXX_Size() int {
-	return xxx_messageInfo_ExtendedURL.Size(m)
+func (m *FromURLRequest) XXX_Size() int {
+	return xxx_messageInfo_FromURLRequest.Size(m)
 }
-func (m *ExtendedURL) XXX_DiscardUnknown() {
-	xxx_messageInfo_ExtendedURL.DiscardUnknown(m)
+func (m *FromURLRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FromURLRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ExtendedURL proto.InternalMessageInfo
+var xxx_messageInfo_FromURLRequest proto.InternalMessageInfo
 
-func (m *ExtendedURL) GetUrl() string {
+func (m *FromURLRequest) GetUrl() string {
 	if m != nil {
 		return m.Url
 	}
 	return ""
 }
 
-func (m *ExtendedURL) GetValues() map[string]string {
+func (m *FromURLRequest) GetProperties() map[string]string {
 	if m != nil {
-		return m.Values
+		return m.Properties
 	}
 	return nil
 }
 
-type RemoteProperties struct {
-	Values               *_struct.Struct `protobuf:"bytes,1,opt,name=values,proto3" json:"values,omitempty"`
+type FromURLResponse struct {
+	Remote               *_struct.Struct `protobuf:"bytes,1,opt,name=remote,proto3" json:"remote,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *RemoteProperties) Reset()         { *m = RemoteProperties{} }
-func (m *RemoteProperties) String() string { return proto.CompactTextString(m) }
-func (*RemoteProperties) ProtoMessage()    {}
-func (*RemoteProperties) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{2}
-}
-
-func (m *RemoteProperties) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RemoteProperties.Unmarshal(m, b)
-}
-func (m *RemoteProperties) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RemoteProperties.Marshal(b, m, deterministic)
-}
-func (m *RemoteProperties) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RemoteProperties.Merge(m, src)
-}
-func (m *RemoteProperties) XXX_Size() int {
-	return xxx_messageInfo_RemoteProperties.Size(m)
-}
-func (m *RemoteProperties) XXX_DiscardUnknown() {
-	xxx_messageInfo_RemoteProperties.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_RemoteProperties proto.InternalMessageInfo
-
-func (m *RemoteProperties) GetValues() *_struct.Struct {
-	if m != nil {
-		return m.Values
-	}
-	return nil
-}
-
-type ParameterProperties struct {
-	Values               *_struct.Struct `protobuf:"bytes,1,opt,name=values,proto3" json:"values,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
-}
-
-func (m *ParameterProperties) Reset()         { *m = ParameterProperties{} }
-func (m *ParameterProperties) String() string { return proto.CompactTextString(m) }
-func (*ParameterProperties) ProtoMessage()    {}
-func (*ParameterProperties) Descriptor() ([]byte, []int) {
+func (m *FromURLResponse) Reset()         { *m = FromURLResponse{} }
+func (m *FromURLResponse) String() string { return proto.CompactTextString(m) }
+func (*FromURLResponse) ProtoMessage()    {}
+func (*FromURLResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_eefc82927d57d89b, []int{3}
 }
 
-func (m *ParameterProperties) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ParameterProperties.Unmarshal(m, b)
+func (m *FromURLResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FromURLResponse.Unmarshal(m, b)
 }
-func (m *ParameterProperties) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ParameterProperties.Marshal(b, m, deterministic)
+func (m *FromURLResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FromURLResponse.Marshal(b, m, deterministic)
 }
-func (m *ParameterProperties) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ParameterProperties.Merge(m, src)
+func (m *FromURLResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FromURLResponse.Merge(m, src)
 }
-func (m *ParameterProperties) XXX_Size() int {
-	return xxx_messageInfo_ParameterProperties.Size(m)
+func (m *FromURLResponse) XXX_Size() int {
+	return xxx_messageInfo_FromURLResponse.Size(m)
 }
-func (m *ParameterProperties) XXX_DiscardUnknown() {
-	xxx_messageInfo_ParameterProperties.DiscardUnknown(m)
+func (m *FromURLResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_FromURLResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ParameterProperties proto.InternalMessageInfo
+var xxx_messageInfo_FromURLResponse proto.InternalMessageInfo
 
-func (m *ParameterProperties) GetValues() *_struct.Struct {
+func (m *FromURLResponse) GetRemote() *_struct.Struct {
 	if m != nil {
-		return m.Values
+		return m.Remote
 	}
 	return nil
 }
+
+type ToURLRequest struct {
+	Remote               *_struct.Struct `protobuf:"bytes,1,opt,name=remote,proto3" json:"remote,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ToURLRequest) Reset()         { *m = ToURLRequest{} }
+func (m *ToURLRequest) String() string { return proto.CompactTextString(m) }
+func (*ToURLRequest) ProtoMessage()    {}
+func (*ToURLRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{4}
+}
+
+func (m *ToURLRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ToURLRequest.Unmarshal(m, b)
+}
+func (m *ToURLRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ToURLRequest.Marshal(b, m, deterministic)
+}
+func (m *ToURLRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ToURLRequest.Merge(m, src)
+}
+func (m *ToURLRequest) XXX_Size() int {
+	return xxx_messageInfo_ToURLRequest.Size(m)
+}
+func (m *ToURLRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ToURLRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ToURLRequest proto.InternalMessageInfo
+
+func (m *ToURLRequest) GetRemote() *_struct.Struct {
+	if m != nil {
+		return m.Remote
+	}
+	return nil
+}
+
+type ToURLResponse struct {
+	Url                  string            `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	Properties           map[string]string `protobuf:"bytes,2,rep,name=properties,proto3" json:"properties,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *ToURLResponse) Reset()         { *m = ToURLResponse{} }
+func (m *ToURLResponse) String() string { return proto.CompactTextString(m) }
+func (*ToURLResponse) ProtoMessage()    {}
+func (*ToURLResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{5}
+}
+
+func (m *ToURLResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ToURLResponse.Unmarshal(m, b)
+}
+func (m *ToURLResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ToURLResponse.Marshal(b, m, deterministic)
+}
+func (m *ToURLResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ToURLResponse.Merge(m, src)
+}
+func (m *ToURLResponse) XXX_Size() int {
+	return xxx_messageInfo_ToURLResponse.Size(m)
+}
+func (m *ToURLResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ToURLResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ToURLResponse proto.InternalMessageInfo
+
+func (m *ToURLResponse) GetUrl() string {
+	if m != nil {
+		return m.Url
+	}
+	return ""
+}
+
+func (m *ToURLResponse) GetProperties() map[string]string {
+	if m != nil {
+		return m.Properties
+	}
+	return nil
+}
+
+type GetParametersRequest struct {
+	Remote               *_struct.Struct `protobuf:"bytes,1,opt,name=remote,proto3" json:"remote,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *GetParametersRequest) Reset()         { *m = GetParametersRequest{} }
+func (m *GetParametersRequest) String() string { return proto.CompactTextString(m) }
+func (*GetParametersRequest) ProtoMessage()    {}
+func (*GetParametersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{6}
+}
+
+func (m *GetParametersRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetParametersRequest.Unmarshal(m, b)
+}
+func (m *GetParametersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetParametersRequest.Marshal(b, m, deterministic)
+}
+func (m *GetParametersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetParametersRequest.Merge(m, src)
+}
+func (m *GetParametersRequest) XXX_Size() int {
+	return xxx_messageInfo_GetParametersRequest.Size(m)
+}
+func (m *GetParametersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetParametersRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetParametersRequest proto.InternalMessageInfo
+
+func (m *GetParametersRequest) GetRemote() *_struct.Struct {
+	if m != nil {
+		return m.Remote
+	}
+	return nil
+}
+
+type GetParametersResponse struct {
+	Parameters           *_struct.Struct `protobuf:"bytes,1,opt,name=parameters,proto3" json:"parameters,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *GetParametersResponse) Reset()         { *m = GetParametersResponse{} }
+func (m *GetParametersResponse) String() string { return proto.CompactTextString(m) }
+func (*GetParametersResponse) ProtoMessage()    {}
+func (*GetParametersResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{7}
+}
+
+func (m *GetParametersResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetParametersResponse.Unmarshal(m, b)
+}
+func (m *GetParametersResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetParametersResponse.Marshal(b, m, deterministic)
+}
+func (m *GetParametersResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetParametersResponse.Merge(m, src)
+}
+func (m *GetParametersResponse) XXX_Size() int {
+	return xxx_messageInfo_GetParametersResponse.Size(m)
+}
+func (m *GetParametersResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetParametersResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetParametersResponse proto.InternalMessageInfo
+
+func (m *GetParametersResponse) GetParameters() *_struct.Struct {
+	if m != nil {
+		return m.Parameters
+	}
+	return nil
+}
+
+type ValidateRemoteRequest struct {
+	Remote               *_struct.Struct `protobuf:"bytes,1,opt,name=remote,proto3" json:"remote,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ValidateRemoteRequest) Reset()         { *m = ValidateRemoteRequest{} }
+func (m *ValidateRemoteRequest) String() string { return proto.CompactTextString(m) }
+func (*ValidateRemoteRequest) ProtoMessage()    {}
+func (*ValidateRemoteRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{8}
+}
+
+func (m *ValidateRemoteRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ValidateRemoteRequest.Unmarshal(m, b)
+}
+func (m *ValidateRemoteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ValidateRemoteRequest.Marshal(b, m, deterministic)
+}
+func (m *ValidateRemoteRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateRemoteRequest.Merge(m, src)
+}
+func (m *ValidateRemoteRequest) XXX_Size() int {
+	return xxx_messageInfo_ValidateRemoteRequest.Size(m)
+}
+func (m *ValidateRemoteRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidateRemoteRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidateRemoteRequest proto.InternalMessageInfo
+
+func (m *ValidateRemoteRequest) GetRemote() *_struct.Struct {
+	if m != nil {
+		return m.Remote
+	}
+	return nil
+}
+
+type ValidateRemoteResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ValidateRemoteResponse) Reset()         { *m = ValidateRemoteResponse{} }
+func (m *ValidateRemoteResponse) String() string { return proto.CompactTextString(m) }
+func (*ValidateRemoteResponse) ProtoMessage()    {}
+func (*ValidateRemoteResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{9}
+}
+
+func (m *ValidateRemoteResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ValidateRemoteResponse.Unmarshal(m, b)
+}
+func (m *ValidateRemoteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ValidateRemoteResponse.Marshal(b, m, deterministic)
+}
+func (m *ValidateRemoteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateRemoteResponse.Merge(m, src)
+}
+func (m *ValidateRemoteResponse) XXX_Size() int {
+	return xxx_messageInfo_ValidateRemoteResponse.Size(m)
+}
+func (m *ValidateRemoteResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidateRemoteResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidateRemoteResponse proto.InternalMessageInfo
+
+type ValidateParametersRequest struct {
+	Parameters           *_struct.Struct `protobuf:"bytes,1,opt,name=parameters,proto3" json:"parameters,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ValidateParametersRequest) Reset()         { *m = ValidateParametersRequest{} }
+func (m *ValidateParametersRequest) String() string { return proto.CompactTextString(m) }
+func (*ValidateParametersRequest) ProtoMessage()    {}
+func (*ValidateParametersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{10}
+}
+
+func (m *ValidateParametersRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ValidateParametersRequest.Unmarshal(m, b)
+}
+func (m *ValidateParametersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ValidateParametersRequest.Marshal(b, m, deterministic)
+}
+func (m *ValidateParametersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateParametersRequest.Merge(m, src)
+}
+func (m *ValidateParametersRequest) XXX_Size() int {
+	return xxx_messageInfo_ValidateParametersRequest.Size(m)
+}
+func (m *ValidateParametersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidateParametersRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidateParametersRequest proto.InternalMessageInfo
+
+func (m *ValidateParametersRequest) GetParameters() *_struct.Struct {
+	if m != nil {
+		return m.Parameters
+	}
+	return nil
+}
+
+type ValidateParametersResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ValidateParametersResponse) Reset()         { *m = ValidateParametersResponse{} }
+func (m *ValidateParametersResponse) String() string { return proto.CompactTextString(m) }
+func (*ValidateParametersResponse) ProtoMessage()    {}
+func (*ValidateParametersResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_eefc82927d57d89b, []int{11}
+}
+
+func (m *ValidateParametersResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ValidateParametersResponse.Unmarshal(m, b)
+}
+func (m *ValidateParametersResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ValidateParametersResponse.Marshal(b, m, deterministic)
+}
+func (m *ValidateParametersResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateParametersResponse.Merge(m, src)
+}
+func (m *ValidateParametersResponse) XXX_Size() int {
+	return xxx_messageInfo_ValidateParametersResponse.Size(m)
+}
+func (m *ValidateParametersResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidateParametersResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidateParametersResponse proto.InternalMessageInfo
 
 type Tag struct {
 	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
@@ -205,7 +500,7 @@ func (m *Tag) Reset()         { *m = Tag{} }
 func (m *Tag) String() string { return proto.CompactTextString(m) }
 func (*Tag) ProtoMessage()    {}
 func (*Tag) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{4}
+	return fileDescriptor_eefc82927d57d89b, []int{12}
 }
 
 func (m *Tag) XXX_Unmarshal(b []byte) error {
@@ -290,7 +585,7 @@ func (m *Commit) Reset()         { *m = Commit{} }
 func (m *Commit) String() string { return proto.CompactTextString(m) }
 func (*Commit) ProtoMessage()    {}
 func (*Commit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{5}
+	return fileDescriptor_eefc82927d57d89b, []int{13}
 }
 
 func (m *Commit) XXX_Unmarshal(b []byte) error {
@@ -338,7 +633,7 @@ func (m *GetCommitRequest) Reset()         { *m = GetCommitRequest{} }
 func (m *GetCommitRequest) String() string { return proto.CompactTextString(m) }
 func (*GetCommitRequest) ProtoMessage()    {}
 func (*GetCommitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{6}
+	return fileDescriptor_eefc82927d57d89b, []int{14}
 }
 
 func (m *GetCommitRequest) XXX_Unmarshal(b []byte) error {
@@ -394,7 +689,7 @@ func (m *GetCommitResponse) Reset()         { *m = GetCommitResponse{} }
 func (m *GetCommitResponse) String() string { return proto.CompactTextString(m) }
 func (*GetCommitResponse) ProtoMessage()    {}
 func (*GetCommitResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{7}
+	return fileDescriptor_eefc82927d57d89b, []int{15}
 }
 
 func (m *GetCommitResponse) XXX_Unmarshal(b []byte) error {
@@ -473,7 +768,7 @@ func (m *ListCommitRequest) Reset()         { *m = ListCommitRequest{} }
 func (m *ListCommitRequest) String() string { return proto.CompactTextString(m) }
 func (*ListCommitRequest) ProtoMessage()    {}
 func (*ListCommitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{8}
+	return fileDescriptor_eefc82927d57d89b, []int{16}
 }
 
 func (m *ListCommitRequest) XXX_Unmarshal(b []byte) error {
@@ -526,7 +821,7 @@ func (m *ListCommitResponse) Reset()         { *m = ListCommitResponse{} }
 func (m *ListCommitResponse) String() string { return proto.CompactTextString(m) }
 func (*ListCommitResponse) ProtoMessage()    {}
 func (*ListCommitResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eefc82927d57d89b, []int{9}
+	return fileDescriptor_eefc82927d57d89b, []int{17}
 }
 
 func (m *ListCommitResponse) XXX_Unmarshal(b []byte) error {
@@ -555,11 +850,20 @@ func (m *ListCommitResponse) GetCommits() []*Commit {
 }
 
 func init() {
-	proto.RegisterType((*RemoteType)(nil), "remote.RemoteType")
-	proto.RegisterType((*ExtendedURL)(nil), "remote.ExtendedURL")
-	proto.RegisterMapType((map[string]string)(nil), "remote.ExtendedURL.ValuesEntry")
-	proto.RegisterType((*RemoteProperties)(nil), "remote.RemoteProperties")
-	proto.RegisterType((*ParameterProperties)(nil), "remote.ParameterProperties")
+	proto.RegisterType((*GetTypeRequest)(nil), "remote.GetTypeRequest")
+	proto.RegisterType((*GetTypeResponse)(nil), "remote.GetTypeResponse")
+	proto.RegisterType((*FromURLRequest)(nil), "remote.FromURLRequest")
+	proto.RegisterMapType((map[string]string)(nil), "remote.FromURLRequest.PropertiesEntry")
+	proto.RegisterType((*FromURLResponse)(nil), "remote.FromURLResponse")
+	proto.RegisterType((*ToURLRequest)(nil), "remote.ToURLRequest")
+	proto.RegisterType((*ToURLResponse)(nil), "remote.ToURLResponse")
+	proto.RegisterMapType((map[string]string)(nil), "remote.ToURLResponse.PropertiesEntry")
+	proto.RegisterType((*GetParametersRequest)(nil), "remote.GetParametersRequest")
+	proto.RegisterType((*GetParametersResponse)(nil), "remote.GetParametersResponse")
+	proto.RegisterType((*ValidateRemoteRequest)(nil), "remote.ValidateRemoteRequest")
+	proto.RegisterType((*ValidateRemoteResponse)(nil), "remote.ValidateRemoteResponse")
+	proto.RegisterType((*ValidateParametersRequest)(nil), "remote.ValidateParametersRequest")
+	proto.RegisterType((*ValidateParametersResponse)(nil), "remote.ValidateParametersResponse")
 	proto.RegisterType((*Tag)(nil), "remote.Tag")
 	proto.RegisterType((*Commit)(nil), "remote.Commit")
 	proto.RegisterType((*GetCommitRequest)(nil), "remote.GetCommitRequest")
@@ -571,46 +875,51 @@ func init() {
 func init() { proto.RegisterFile("remote.proto", fileDescriptor_eefc82927d57d89b) }
 
 var fileDescriptor_eefc82927d57d89b = []byte{
-	// 616 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0x41, 0x6f, 0x9b, 0x4c,
-	0x10, 0x0d, 0xc6, 0x21, 0xf1, 0xe0, 0xcf, 0x72, 0x36, 0x9f, 0x5a, 0x82, 0x2b, 0xd9, 0xa5, 0x17,
-	0x9f, 0xb0, 0xe4, 0x48, 0x4d, 0xda, 0x43, 0x55, 0x39, 0xb5, 0x93, 0x48, 0x51, 0xe5, 0x12, 0x37,
-	0xd7, 0x88, 0x84, 0x0d, 0x42, 0x01, 0x43, 0x61, 0xa9, 0xca, 0x8f, 0xe8, 0xa9, 0xbf, 0xa0, 0x97,
-	0xfe, 0xce, 0x8a, 0x59, 0xd6, 0xa6, 0x36, 0x8e, 0x2c, 0xb5, 0x37, 0x76, 0xe6, 0xcd, 0xdb, 0x37,
-	0x8f, 0x99, 0x85, 0x66, 0x4c, 0x83, 0x90, 0x51, 0x33, 0x8a, 0x43, 0x16, 0x12, 0x85, 0x9f, 0xf4,
-	0x8e, 0x1b, 0x86, 0xae, 0x4f, 0x07, 0x18, 0xbd, 0x4b, 0x1f, 0x06, 0x34, 0x88, 0x58, 0xc6, 0x41,
-	0xfa, 0x8b, 0xd5, 0x64, 0xc2, 0xe2, 0xf4, 0x9e, 0xf1, 0xac, 0xd1, 0x03, 0xb0, 0x90, 0x64, 0x96,
-	0x45, 0x94, 0x10, 0xa8, 0xb3, 0x2c, 0xa2, 0x9a, 0xd4, 0x93, 0xfa, 0x0d, 0x0b, 0xbf, 0x8d, 0x1f,
-	0x12, 0xa8, 0xe3, 0x6f, 0x8c, 0xce, 0x1d, 0xea, 0x7c, 0xb6, 0xae, 0x48, 0x1b, 0xe4, 0x34, 0xf6,
-	0x0b, 0x48, 0xfe, 0x49, 0x4e, 0x40, 0xf9, 0x6a, 0xfb, 0x29, 0x4d, 0xb4, 0x5a, 0x4f, 0xee, 0xab,
-	0xc3, 0xae, 0x59, 0xa8, 0x2c, 0x95, 0x99, 0x37, 0x88, 0x18, 0xcf, 0x59, 0x9c, 0x59, 0x05, 0x5c,
-	0x7f, 0x03, 0x6a, 0x29, 0x9c, 0x33, 0x3f, 0xd2, 0x4c, 0x30, 0x3f, 0xd2, 0x8c, 0xfc, 0x0f, 0xbb,
-	0x08, 0xd5, 0x6a, 0x18, 0xe3, 0x87, 0xb7, 0xb5, 0x53, 0xc9, 0x38, 0x83, 0x36, 0xd7, 0x3d, 0x8d,
-	0xc3, 0x88, 0xc6, 0xcc, 0xa3, 0x09, 0x19, 0x2c, 0x74, 0xe4, 0x14, 0xea, 0xf0, 0xb9, 0xc9, 0x5b,
-	0x37, 0x45, 0xeb, 0xe6, 0x35, 0xb6, 0x2e, 0xee, 0x37, 0x26, 0x70, 0x38, 0xb5, 0x63, 0x3b, 0xa0,
-	0x8c, 0xc6, 0x7f, 0xc3, 0xf3, 0x00, 0xf2, 0xcc, 0x76, 0x2b, 0xf4, 0x77, 0x01, 0x10, 0x72, 0x3b,
-	0x4f, 0x7d, 0x1f, 0x9b, 0xd8, 0xbf, 0xd8, 0xb1, 0x1a, 0x18, 0xfb, 0x98, 0xfa, 0x3e, 0x79, 0x05,
-	0x4d, 0x0e, 0x48, 0x58, 0xec, 0xcd, 0x5d, 0x4d, 0xce, 0x6b, 0x2f, 0x76, 0x2c, 0x15, 0xa3, 0xd7,
-	0x18, 0x1c, 0xed, 0x15, 0x2e, 0x18, 0x9f, 0x40, 0x39, 0x0b, 0x83, 0xc0, 0x63, 0xa4, 0x05, 0x35,
-	0xcf, 0x29, 0x6e, 0xaa, 0x79, 0x0e, 0x39, 0x01, 0x88, 0x16, 0x0d, 0xe0, 0x45, 0x4f, 0xc8, 0x2e,
-	0x41, 0x8d, 0x9f, 0x12, 0xb4, 0xcf, 0x29, 0xe3, 0xb4, 0x16, 0xfd, 0x92, 0xd2, 0x84, 0xad, 0xb0,
-	0x49, 0x5b, 0xb3, 0x61, 0xa1, 0x30, 0x74, 0x0b, 0x19, 0x0b, 0x28, 0xe9, 0x40, 0xe3, 0x1e, 0x25,
-	0xdc, 0x7a, 0x0e, 0x37, 0xc1, 0xda, 0xe7, 0x81, 0x4b, 0xc7, 0x48, 0xe1, 0xa0, 0x24, 0x31, 0x89,
-	0xc2, 0x79, 0x42, 0xc9, 0x4b, 0x50, 0x8b, 0x0a, 0xf4, 0x56, 0x2a, 0xbc, 0x05, 0x1e, 0x44, 0x73,
-	0x8f, 0xa1, 0x59, 0x40, 0x96, 0x43, 0xa4, 0x0e, 0x5b, 0x62, 0x3a, 0x39, 0x61, 0x6e, 0x36, 0x47,
-	0xe1, 0x28, 0x8e, 0xf6, 0x41, 0xe1, 0x47, 0xe3, 0x97, 0x04, 0x07, 0x57, 0x5e, 0xf2, 0xcf, 0xbd,
-	0x71, 0xb7, 0xf7, 0x26, 0x87, 0x92, 0x2e, 0xd4, 0x99, 0xed, 0x26, 0x9a, 0x8c, 0xcb, 0xa5, 0x0a,
-	0xf9, 0x33, 0xdb, 0xb5, 0x30, 0x61, 0xbc, 0x03, 0x52, 0xd6, 0x59, 0x18, 0xd4, 0x87, 0x3d, 0xde,
-	0x48, 0xae, 0x52, 0x5e, 0x6f, 0xdc, 0x12, 0xe9, 0xe1, 0xf7, 0x3a, 0x28, 0x7c, 0x99, 0xc8, 0x10,
-	0xea, 0xf8, 0x10, 0x3c, 0x5b, 0x13, 0x36, 0xce, 0x9f, 0x14, 0x9d, 0x08, 0x8e, 0xd2, 0xa3, 0x71,
-	0x0a, 0x7b, 0x93, 0x38, 0x0c, 0xf2, 0xb7, 0xe1, 0xb0, 0x62, 0xf3, 0x75, 0xed, 0xcf, 0x9a, 0xd2,
-	0xa2, 0xbd, 0x86, 0xdd, 0x59, 0x98, 0xd7, 0x6d, 0x84, 0xe8, 0x55, 0x8c, 0x64, 0x02, 0xff, 0x9d,
-	0x53, 0x36, 0x5d, 0x8e, 0xcf, 0xe6, 0xfa, 0x8e, 0xc8, 0x54, 0x2d, 0xfa, 0x08, 0x5a, 0x37, 0xb6,
-	0xef, 0x39, 0x36, 0xa3, 0x45, 0xff, 0x9b, 0x89, 0x36, 0x38, 0x42, 0x2e, 0x81, 0x08, 0x8e, 0x92,
-	0xa0, 0xa7, 0xae, 0xdd, 0x48, 0xf5, 0x01, 0xd4, 0xe5, 0x7f, 0x4c, 0xc8, 0x91, 0xe0, 0x58, 0x1b,
-	0x42, 0x5d, 0xaf, 0x4a, 0x15, 0xff, 0xfd, 0x3d, 0x34, 0x16, 0xdb, 0xb2, 0xec, 0x67, 0x75, 0xc7,
-	0xf5, 0xa3, 0x8a, 0x0c, 0x67, 0xb8, 0x53, 0x50, 0xd7, 0xf1, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0x07, 0x22, 0x8b, 0x92, 0x6d, 0x06, 0x00, 0x00,
+	// 703 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x55, 0xdb, 0x4e, 0xdb, 0x40,
+	0x10, 0xc5, 0x09, 0x24, 0x64, 0x1c, 0x02, 0xac, 0xb8, 0x18, 0x97, 0x16, 0xd8, 0x8a, 0x8a, 0xa7,
+	0x20, 0x85, 0x4a, 0xad, 0x90, 0x7a, 0x11, 0x2d, 0x84, 0x4a, 0xa8, 0xa5, 0x26, 0xe5, 0xa5, 0x0f,
+	0xc8, 0x90, 0xc5, 0xb2, 0x70, 0x62, 0xd7, 0x5e, 0x57, 0xca, 0xe7, 0xf4, 0xa5, 0x55, 0x7f, 0xa1,
+	0x5f, 0x57, 0x79, 0x77, 0xec, 0xf8, 0x46, 0xa1, 0x51, 0xfb, 0x66, 0xcf, 0x9c, 0x73, 0x66, 0xe6,
+	0xac, 0x77, 0x0c, 0x4d, 0x9f, 0x0d, 0x5c, 0xce, 0xda, 0x9e, 0xef, 0x72, 0x97, 0xd4, 0xe4, 0x9b,
+	0xbe, 0x6e, 0xb9, 0xae, 0xe5, 0xb0, 0x5d, 0x11, 0xbd, 0x0c, 0xaf, 0x77, 0x03, 0xee, 0x87, 0x57,
+	0x5c, 0xa2, 0xe8, 0x02, 0xb4, 0xba, 0x8c, 0xf7, 0x46, 0x1e, 0x33, 0xd8, 0x97, 0x90, 0x05, 0x9c,
+	0x6e, 0xc3, 0x7c, 0x12, 0x09, 0x3c, 0x77, 0x18, 0x30, 0x42, 0x60, 0x9a, 0x8f, 0x3c, 0xa6, 0x29,
+	0x9b, 0xca, 0x4e, 0xc3, 0x10, 0xcf, 0xf4, 0xa7, 0x02, 0xad, 0x23, 0xdf, 0x1d, 0x7c, 0x32, 0x4e,
+	0x90, 0x49, 0x16, 0xa0, 0x1a, 0xfa, 0x0e, 0xa2, 0xa2, 0x47, 0x72, 0x04, 0xe0, 0xf9, 0xae, 0xc7,
+	0x7c, 0x6e, 0xb3, 0x40, 0xab, 0x6c, 0x56, 0x77, 0xd4, 0xce, 0x93, 0x36, 0xb6, 0x99, 0x65, 0xb7,
+	0x4f, 0x13, 0xe0, 0xe1, 0x90, 0xfb, 0x23, 0x23, 0xc5, 0xd4, 0x5f, 0xc0, 0x7c, 0x2e, 0x1d, 0x15,
+	0xbb, 0x61, 0xa3, 0xb8, 0xd8, 0x0d, 0x1b, 0x91, 0x25, 0x98, 0xf9, 0x6a, 0x3a, 0x21, 0xd3, 0x2a,
+	0x22, 0x26, 0x5f, 0xf6, 0x2b, 0xcf, 0x15, 0x7a, 0x00, 0xf3, 0x49, 0x31, 0x1c, 0x69, 0x17, 0xd0,
+	0x1f, 0xa1, 0xa0, 0x76, 0x56, 0xdb, 0xd2, 0xa6, 0x76, 0x6c, 0x53, 0xfb, 0x4c, 0xd8, 0x64, 0x20,
+	0x8c, 0xbe, 0x82, 0x66, 0xcf, 0x4d, 0x0d, 0xfb, 0xd7, 0x02, 0x3f, 0x14, 0x98, 0x43, 0x05, 0xec,
+	0xa1, 0xe8, 0xd7, 0x61, 0x89, 0x5f, 0xdb, 0xb1, 0x5f, 0x19, 0xf2, 0xff, 0xb4, 0xab, 0x0b, 0x4b,
+	0x5d, 0xc6, 0x4f, 0x4d, 0xdf, 0x1c, 0x30, 0xce, 0xfc, 0x60, 0xe2, 0x91, 0x4f, 0x61, 0x39, 0x27,
+	0x84, 0x93, 0x3f, 0x03, 0xf0, 0x92, 0xe8, 0x5d, 0x6a, 0x29, 0x28, 0x3d, 0x86, 0xe5, 0x73, 0xd3,
+	0xb1, 0xfb, 0x26, 0x67, 0x86, 0xa8, 0x31, 0x71, 0x6f, 0x1a, 0xac, 0xe4, 0x95, 0x64, 0x73, 0xb4,
+	0x07, 0x6b, 0x71, 0xa6, 0xe8, 0xc1, 0xc4, 0x9d, 0xaf, 0x83, 0x5e, 0xa6, 0x8a, 0x35, 0xaf, 0xa1,
+	0xda, 0x33, 0xad, 0x92, 0x53, 0xda, 0x00, 0x10, 0x07, 0x73, 0x31, 0x0c, 0x1d, 0x47, 0x1c, 0xd5,
+	0xec, 0xf1, 0x94, 0xd1, 0x10, 0xb1, 0xf7, 0xa1, 0xe3, 0x90, 0xc7, 0xd0, 0x94, 0x80, 0x80, 0xfb,
+	0xf6, 0xd0, 0xd2, 0xaa, 0x11, 0xf7, 0x78, 0xca, 0x50, 0x45, 0xf4, 0x4c, 0x04, 0x0f, 0xea, 0x78,
+	0xd6, 0xf4, 0x23, 0xd4, 0xde, 0xb8, 0x83, 0x81, 0xcd, 0x49, 0x0b, 0x2a, 0x76, 0x1f, 0x2b, 0x55,
+	0xec, 0xbe, 0x18, 0x2c, 0xfd, 0xe9, 0xdd, 0x31, 0x58, 0x02, 0xa5, 0xdf, 0x14, 0x58, 0xe8, 0x32,
+	0x2e, 0x65, 0xd3, 0x36, 0x8d, 0xd5, 0x94, 0x7b, 0xab, 0xe5, 0xfc, 0xad, 0xdc, 0xdb, 0x5f, 0xf2,
+	0x00, 0x1a, 0x57, 0xa2, 0x85, 0x0b, 0xbb, 0x2f, 0x4d, 0x30, 0x66, 0x65, 0xe0, 0x5d, 0x9f, 0x86,
+	0xb0, 0x98, 0x6a, 0x11, 0x3f, 0xc2, 0x2d, 0x50, 0x91, 0x21, 0xbc, 0x55, 0xd0, 0x5b, 0x90, 0x41,
+	0x61, 0xee, 0x1e, 0x34, 0x11, 0x32, 0xbe, 0x2a, 0x6a, 0xa7, 0x15, 0xdf, 0x48, 0x29, 0x18, 0x99,
+	0x2d, 0x51, 0xe7, 0x11, 0xe8, 0x60, 0x16, 0x6a, 0xf2, 0x95, 0x7e, 0x57, 0x60, 0xf1, 0xc4, 0x0e,
+	0xfe, 0xb9, 0x37, 0xd6, 0xfd, 0xbd, 0x89, 0xa0, 0x64, 0x03, 0xa6, 0xb9, 0x69, 0x05, 0x5a, 0x55,
+	0x2c, 0x14, 0x35, 0x59, 0x28, 0xa6, 0x65, 0x88, 0x04, 0x7d, 0x09, 0x24, 0xdd, 0x27, 0x1a, 0xb4,
+	0x03, 0x75, 0x39, 0x48, 0xd4, 0x65, 0xb5, 0x38, 0xb8, 0x11, 0xa7, 0x3b, 0xbf, 0xa6, 0xa1, 0x26,
+	0x6f, 0x11, 0xd9, 0x87, 0x3a, 0xfe, 0x3e, 0xc8, 0x4a, 0x0c, 0xcf, 0xfe, 0x61, 0xf4, 0xd5, 0x42,
+	0x1c, 0x0b, 0xee, 0x43, 0x1d, 0xf7, 0xf4, 0x98, 0x9b, 0xfd, 0x4b, 0x8c, 0xb9, 0xf9, 0x85, 0xfe,
+	0x14, 0x66, 0xc4, 0x82, 0x24, 0x4b, 0xb9, 0x7d, 0x29, 0x79, 0xcb, 0xa5, 0x5b, 0x94, 0x9c, 0xc0,
+	0x5c, 0x66, 0x43, 0x91, 0xf5, 0x54, 0x6f, 0x85, 0xdb, 0xaf, 0x3f, 0xbc, 0x25, 0x8b, 0x6a, 0x1f,
+	0xa0, 0x95, 0xdd, 0x29, 0x24, 0x21, 0x94, 0x6e, 0x2d, 0xfd, 0xd1, 0x6d, 0x69, 0x14, 0xfc, 0x0c,
+	0xa4, 0xb8, 0x34, 0xc8, 0x56, 0x9e, 0x55, 0x6c, 0x94, 0xfe, 0x09, 0x82, 0xe2, 0x6f, 0x41, 0x1d,
+	0x1f, 0x7a, 0x40, 0xd6, 0x62, 0x4a, 0xe1, 0x8b, 0xd5, 0xf5, 0xb2, 0x14, 0xaa, 0xbc, 0x86, 0x46,
+	0x72, 0xb5, 0x88, 0x96, 0xf2, 0x27, 0x2b, 0xb1, 0x56, 0x92, 0x91, 0x0a, 0x97, 0x35, 0xf1, 0xe9,
+	0xee, 0xfd, 0x0e, 0x00, 0x00, 0xff, 0xff, 0x96, 0xc4, 0x67, 0x70, 0xbf, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -625,12 +934,12 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type RemoteClient interface {
-	Type(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*RemoteType, error)
-	FromURL(ctx context.Context, in *ExtendedURL, opts ...grpc.CallOption) (*RemoteProperties, error)
-	ToURL(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*ExtendedURL, error)
-	GetParameters(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*ParameterProperties, error)
-	ValidateRemote(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*empty.Empty, error)
-	ValidateParameters(ctx context.Context, in *ParameterProperties, opts ...grpc.CallOption) (*empty.Empty, error)
+	GetType(ctx context.Context, in *GetTypeRequest, opts ...grpc.CallOption) (*GetTypeResponse, error)
+	FromURL(ctx context.Context, in *FromURLRequest, opts ...grpc.CallOption) (*FromURLResponse, error)
+	ToURL(ctx context.Context, in *ToURLRequest, opts ...grpc.CallOption) (*ToURLResponse, error)
+	GetParameters(ctx context.Context, in *GetParametersRequest, opts ...grpc.CallOption) (*GetParametersResponse, error)
+	ValidateRemote(ctx context.Context, in *ValidateRemoteRequest, opts ...grpc.CallOption) (*ValidateRemoteResponse, error)
+	ValidateParameters(ctx context.Context, in *ValidateParametersRequest, opts ...grpc.CallOption) (*ValidateParametersResponse, error)
 	ListCommits(ctx context.Context, in *ListCommitRequest, opts ...grpc.CallOption) (*ListCommitResponse, error)
 	GetCommit(ctx context.Context, in *GetCommitRequest, opts ...grpc.CallOption) (*GetCommitResponse, error)
 }
@@ -643,17 +952,17 @@ func NewRemoteClient(cc *grpc.ClientConn) RemoteClient {
 	return &remoteClient{cc}
 }
 
-func (c *remoteClient) Type(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*RemoteType, error) {
-	out := new(RemoteType)
-	err := c.cc.Invoke(ctx, "/remote.Remote/Type", in, out, opts...)
+func (c *remoteClient) GetType(ctx context.Context, in *GetTypeRequest, opts ...grpc.CallOption) (*GetTypeResponse, error) {
+	out := new(GetTypeResponse)
+	err := c.cc.Invoke(ctx, "/remote.Remote/GetType", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *remoteClient) FromURL(ctx context.Context, in *ExtendedURL, opts ...grpc.CallOption) (*RemoteProperties, error) {
-	out := new(RemoteProperties)
+func (c *remoteClient) FromURL(ctx context.Context, in *FromURLRequest, opts ...grpc.CallOption) (*FromURLResponse, error) {
+	out := new(FromURLResponse)
 	err := c.cc.Invoke(ctx, "/remote.Remote/FromURL", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -661,8 +970,8 @@ func (c *remoteClient) FromURL(ctx context.Context, in *ExtendedURL, opts ...grp
 	return out, nil
 }
 
-func (c *remoteClient) ToURL(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*ExtendedURL, error) {
-	out := new(ExtendedURL)
+func (c *remoteClient) ToURL(ctx context.Context, in *ToURLRequest, opts ...grpc.CallOption) (*ToURLResponse, error) {
+	out := new(ToURLResponse)
 	err := c.cc.Invoke(ctx, "/remote.Remote/ToURL", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -670,8 +979,8 @@ func (c *remoteClient) ToURL(ctx context.Context, in *RemoteProperties, opts ...
 	return out, nil
 }
 
-func (c *remoteClient) GetParameters(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*ParameterProperties, error) {
-	out := new(ParameterProperties)
+func (c *remoteClient) GetParameters(ctx context.Context, in *GetParametersRequest, opts ...grpc.CallOption) (*GetParametersResponse, error) {
+	out := new(GetParametersResponse)
 	err := c.cc.Invoke(ctx, "/remote.Remote/GetParameters", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -679,8 +988,8 @@ func (c *remoteClient) GetParameters(ctx context.Context, in *RemoteProperties, 
 	return out, nil
 }
 
-func (c *remoteClient) ValidateRemote(ctx context.Context, in *RemoteProperties, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *remoteClient) ValidateRemote(ctx context.Context, in *ValidateRemoteRequest, opts ...grpc.CallOption) (*ValidateRemoteResponse, error) {
+	out := new(ValidateRemoteResponse)
 	err := c.cc.Invoke(ctx, "/remote.Remote/ValidateRemote", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -688,8 +997,8 @@ func (c *remoteClient) ValidateRemote(ctx context.Context, in *RemoteProperties,
 	return out, nil
 }
 
-func (c *remoteClient) ValidateParameters(ctx context.Context, in *ParameterProperties, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *remoteClient) ValidateParameters(ctx context.Context, in *ValidateParametersRequest, opts ...grpc.CallOption) (*ValidateParametersResponse, error) {
+	out := new(ValidateParametersResponse)
 	err := c.cc.Invoke(ctx, "/remote.Remote/ValidateParameters", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -717,12 +1026,12 @@ func (c *remoteClient) GetCommit(ctx context.Context, in *GetCommitRequest, opts
 
 // RemoteServer is the server API for Remote service.
 type RemoteServer interface {
-	Type(context.Context, *empty.Empty) (*RemoteType, error)
-	FromURL(context.Context, *ExtendedURL) (*RemoteProperties, error)
-	ToURL(context.Context, *RemoteProperties) (*ExtendedURL, error)
-	GetParameters(context.Context, *RemoteProperties) (*ParameterProperties, error)
-	ValidateRemote(context.Context, *RemoteProperties) (*empty.Empty, error)
-	ValidateParameters(context.Context, *ParameterProperties) (*empty.Empty, error)
+	GetType(context.Context, *GetTypeRequest) (*GetTypeResponse, error)
+	FromURL(context.Context, *FromURLRequest) (*FromURLResponse, error)
+	ToURL(context.Context, *ToURLRequest) (*ToURLResponse, error)
+	GetParameters(context.Context, *GetParametersRequest) (*GetParametersResponse, error)
+	ValidateRemote(context.Context, *ValidateRemoteRequest) (*ValidateRemoteResponse, error)
+	ValidateParameters(context.Context, *ValidateParametersRequest) (*ValidateParametersResponse, error)
 	ListCommits(context.Context, *ListCommitRequest) (*ListCommitResponse, error)
 	GetCommit(context.Context, *GetCommitRequest) (*GetCommitResponse, error)
 }
@@ -731,22 +1040,22 @@ type RemoteServer interface {
 type UnimplementedRemoteServer struct {
 }
 
-func (*UnimplementedRemoteServer) Type(ctx context.Context, req *empty.Empty) (*RemoteType, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Type not implemented")
+func (*UnimplementedRemoteServer) GetType(ctx context.Context, req *GetTypeRequest) (*GetTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetType not implemented")
 }
-func (*UnimplementedRemoteServer) FromURL(ctx context.Context, req *ExtendedURL) (*RemoteProperties, error) {
+func (*UnimplementedRemoteServer) FromURL(ctx context.Context, req *FromURLRequest) (*FromURLResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FromURL not implemented")
 }
-func (*UnimplementedRemoteServer) ToURL(ctx context.Context, req *RemoteProperties) (*ExtendedURL, error) {
+func (*UnimplementedRemoteServer) ToURL(ctx context.Context, req *ToURLRequest) (*ToURLResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ToURL not implemented")
 }
-func (*UnimplementedRemoteServer) GetParameters(ctx context.Context, req *RemoteProperties) (*ParameterProperties, error) {
+func (*UnimplementedRemoteServer) GetParameters(ctx context.Context, req *GetParametersRequest) (*GetParametersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetParameters not implemented")
 }
-func (*UnimplementedRemoteServer) ValidateRemote(ctx context.Context, req *RemoteProperties) (*empty.Empty, error) {
+func (*UnimplementedRemoteServer) ValidateRemote(ctx context.Context, req *ValidateRemoteRequest) (*ValidateRemoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateRemote not implemented")
 }
-func (*UnimplementedRemoteServer) ValidateParameters(ctx context.Context, req *ParameterProperties) (*empty.Empty, error) {
+func (*UnimplementedRemoteServer) ValidateParameters(ctx context.Context, req *ValidateParametersRequest) (*ValidateParametersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateParameters not implemented")
 }
 func (*UnimplementedRemoteServer) ListCommits(ctx context.Context, req *ListCommitRequest) (*ListCommitResponse, error) {
@@ -760,26 +1069,26 @@ func RegisterRemoteServer(s *grpc.Server, srv RemoteServer) {
 	s.RegisterService(&_Remote_serviceDesc, srv)
 }
 
-func _Remote_Type_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
+func _Remote_GetType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTypeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RemoteServer).Type(ctx, in)
+		return srv.(RemoteServer).GetType(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/remote.Remote/Type",
+		FullMethod: "/remote.Remote/GetType",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RemoteServer).Type(ctx, req.(*empty.Empty))
+		return srv.(RemoteServer).GetType(ctx, req.(*GetTypeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Remote_FromURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExtendedURL)
+	in := new(FromURLRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -791,13 +1100,13 @@ func _Remote_FromURL_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/remote.Remote/FromURL",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RemoteServer).FromURL(ctx, req.(*ExtendedURL))
+		return srv.(RemoteServer).FromURL(ctx, req.(*FromURLRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Remote_ToURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoteProperties)
+	in := new(ToURLRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -809,13 +1118,13 @@ func _Remote_ToURL_Handler(srv interface{}, ctx context.Context, dec func(interf
 		FullMethod: "/remote.Remote/ToURL",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RemoteServer).ToURL(ctx, req.(*RemoteProperties))
+		return srv.(RemoteServer).ToURL(ctx, req.(*ToURLRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Remote_GetParameters_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoteProperties)
+	in := new(GetParametersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -827,13 +1136,13 @@ func _Remote_GetParameters_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/remote.Remote/GetParameters",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RemoteServer).GetParameters(ctx, req.(*RemoteProperties))
+		return srv.(RemoteServer).GetParameters(ctx, req.(*GetParametersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Remote_ValidateRemote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoteProperties)
+	in := new(ValidateRemoteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -845,13 +1154,13 @@ func _Remote_ValidateRemote_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/remote.Remote/ValidateRemote",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RemoteServer).ValidateRemote(ctx, req.(*RemoteProperties))
+		return srv.(RemoteServer).ValidateRemote(ctx, req.(*ValidateRemoteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Remote_ValidateParameters_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ParameterProperties)
+	in := new(ValidateParametersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -863,7 +1172,7 @@ func _Remote_ValidateParameters_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/remote.Remote/ValidateParameters",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RemoteServer).ValidateParameters(ctx, req.(*ParameterProperties))
+		return srv.(RemoteServer).ValidateParameters(ctx, req.(*ValidateParametersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -909,8 +1218,8 @@ var _Remote_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*RemoteServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Type",
-			Handler:    _Remote_Type_Handler,
+			MethodName: "GetType",
+			Handler:    _Remote_GetType_Handler,
 		},
 		{
 			MethodName: "FromURL",

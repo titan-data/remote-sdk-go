@@ -5,7 +5,6 @@ package remote
 
 import (
 	"context"
-	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/hashicorp/go-plugin"
 	proto "github.com/titan-data/remote-sdk-go/internal/proto"
 	"github.com/titan-data/remote-sdk-go/internal/util"
@@ -17,7 +16,8 @@ type remoteRPCClient struct {
 }
 
 func (r remoteRPCClient) Type() (string, error) {
-	res, err := r.Client.Type(context.Background(), &empty.Empty{})
+	req := proto.GetTypeRequest{}
+	res, err := r.Client.GetType(context.Background(), &req)
 	if err != nil {
 		return "", err
 	}
@@ -25,12 +25,12 @@ func (r remoteRPCClient) Type() (string, error) {
 }
 
 func (r remoteRPCClient) FromURL(url string, properties map[string]string) (map[string]interface{}, error) {
-	input := proto.ExtendedURL{Url: url, Values: properties}
-	res, err := r.Client.FromURL(context.Background(), &input)
+	req := proto.FromURLRequest{Url: url, Properties: properties}
+	res, err := r.Client.FromURL(context.Background(), &req)
 	if err != nil {
 		return nil, err
 	}
-	output, err := util.Struct2Map(res.Values)
+	output, err := util.Struct2Map(res.Remote)
 	if err != nil {
 		return nil, err
 	}
@@ -42,12 +42,12 @@ func (r remoteRPCClient) ToURL(properties map[string]interface{}) (string, map[s
 	if err != nil {
 		return "", nil, err
 	}
-	props := proto.RemoteProperties{Values: s}
-	res, err := r.Client.ToURL(context.Background(), &props)
+	req := proto.ToURLRequest{Remote: s}
+	res, err := r.Client.ToURL(context.Background(), &req)
 	if err != nil {
 		return "", nil, err
 	}
-	return res.Url, res.Values, nil
+	return res.Url, res.Properties, nil
 }
 
 func (r remoteRPCClient) GetParameters(properties map[string]interface{}) (map[string]interface{}, error) {
@@ -55,12 +55,12 @@ func (r remoteRPCClient) GetParameters(properties map[string]interface{}) (map[s
 	if err != nil {
 		return nil, err
 	}
-	input := proto.RemoteProperties{Values: p}
-	res, err := r.Client.GetParameters(context.Background(), &input)
+	req := proto.GetParametersRequest{Remote: p}
+	res, err := r.Client.GetParameters(context.Background(), &req)
 	if err != nil {
 		return nil, err
 	}
-	return util.Struct2Map(res.Values)
+	return util.Struct2Map(res.Parameters)
 }
 
 func (r remoteRPCClient) ValidateRemote(properties map[string]interface{}) error {
@@ -68,8 +68,8 @@ func (r remoteRPCClient) ValidateRemote(properties map[string]interface{}) error
 	if err != nil {
 		return err
 	}
-	input := proto.RemoteProperties{Values: p}
-	_, err = r.Client.ValidateRemote(context.Background(), &input)
+	req := proto.ValidateRemoteRequest{Remote: p}
+	_, err = r.Client.ValidateRemote(context.Background(), &req)
 	return err
 }
 
@@ -78,8 +78,8 @@ func (r remoteRPCClient) ValidateParameters(parameters map[string]interface{}) e
 	if err != nil {
 		return err
 	}
-	input := proto.ParameterProperties{Values: p}
-	_, err = r.Client.ValidateParameters(context.Background(), &input)
+	req := proto.ValidateParametersRequest{Parameters: p}
+	_, err = r.Client.ValidateParameters(context.Background(), &req)
 	return err
 }
 
@@ -162,16 +162,16 @@ type remoteRPCServer struct {
 	Impl Remote
 }
 
-func (r *remoteRPCServer) Type(context.Context, *empty.Empty) (*proto.RemoteType, error) {
+func (r *remoteRPCServer) GetType(context.Context, *proto.GetTypeRequest) (*proto.GetTypeResponse, error) {
 	typ, err := r.Impl.Type()
 	if err != nil {
 		return nil, err
 	}
-	return &proto.RemoteType{Type: typ}, nil
+	return &proto.GetTypeResponse{Type: typ}, nil
 }
 
-func (r *remoteRPCServer) FromURL(ctx context.Context, req *proto.ExtendedURL) (*proto.RemoteProperties, error) {
-	props, err := r.Impl.FromURL(req.Url, req.Values)
+func (r *remoteRPCServer) FromURL(ctx context.Context, req *proto.FromURLRequest) (*proto.FromURLResponse, error) {
+	props, err := r.Impl.FromURL(req.Url, req.Properties)
 	if err != nil {
 		return nil, err
 	}
@@ -179,11 +179,11 @@ func (r *remoteRPCServer) FromURL(ctx context.Context, req *proto.ExtendedURL) (
 	if err != nil {
 		return nil, err
 	}
-	return &proto.RemoteProperties{Values: output}, nil
+	return &proto.FromURLResponse{Remote: output}, nil
 }
 
-func (r *remoteRPCServer) ToURL(ctx context.Context, req *proto.RemoteProperties) (*proto.ExtendedURL, error) {
-	input, err := util.Struct2Map(req.Values)
+func (r *remoteRPCServer) ToURL(ctx context.Context, req *proto.ToURLRequest) (*proto.ToURLResponse, error) {
+	input, err := util.Struct2Map(req.Remote)
 	if err != nil {
 		return nil, err
 	}
@@ -191,15 +191,12 @@ func (r *remoteRPCServer) ToURL(ctx context.Context, req *proto.RemoteProperties
 	if err != nil {
 		return nil, err
 	}
-	ret := &proto.ExtendedURL{
-		Url:    url,
-		Values: props,
-	}
+	ret := &proto.ToURLResponse{Url:    url, Properties: props }
 	return ret, nil
 }
 
-func (r *remoteRPCServer) GetParameters(ctx context.Context, req *proto.RemoteProperties) (*proto.ParameterProperties, error) {
-	input, err := util.Struct2Map(req.Values)
+func (r *remoteRPCServer) GetParameters(ctx context.Context, req *proto.GetParametersRequest) (*proto.GetParametersResponse, error) {
+	input, err := util.Struct2Map(req.Remote)
 	if err != nil {
 		return nil, err
 	}
@@ -211,25 +208,25 @@ func (r *remoteRPCServer) GetParameters(ctx context.Context, req *proto.RemotePr
 	if err != nil {
 		return nil, err
 	}
-	return &proto.ParameterProperties{Values: output}, nil
+	return &proto.GetParametersResponse{Parameters: output}, nil
 }
 
-func (r *remoteRPCServer) ValidateRemote(ctx context.Context, req *proto.RemoteProperties) (*empty.Empty, error) {
-	remote, err := util.Struct2Map(req.Values)
+func (r *remoteRPCServer) ValidateRemote(ctx context.Context, req *proto.ValidateRemoteRequest) (*proto.ValidateRemoteResponse, error) {
+	remote, err := util.Struct2Map(req.Remote)
 	if err != nil {
 		return nil, err
 	}
 	err = r.Impl.ValidateRemote(remote)
-	return &empty.Empty{}, err
+	return &proto.ValidateRemoteResponse{}, err
 }
 
-func (r *remoteRPCServer) ValidateParameters(ctx context.Context, req *proto.ParameterProperties) (*empty.Empty, error) {
-	params, err := util.Struct2Map(req.Values)
+func (r *remoteRPCServer) ValidateParameters(ctx context.Context, req *proto.ValidateParametersRequest) (*proto.ValidateParametersResponse, error) {
+	params, err := util.Struct2Map(req.Parameters)
 	if err != nil {
 		return nil, err
 	}
 	err = r.Impl.ValidateParameters(params)
-	return &empty.Empty{}, err
+	return &proto.ValidateParametersResponse{}, err
 }
 
 func (r *remoteRPCServer) ListCommits(ctx context.Context, req *proto.ListCommitRequest) (*proto.ListCommitResponse, error) {

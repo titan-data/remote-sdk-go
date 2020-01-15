@@ -1,3 +1,6 @@
+/*
+ * Copyright The Titan Project Contributors.
+ */
 package echo
 
 import "github.com/titan-data/remote-sdk-go/remote"
@@ -40,7 +43,7 @@ func (m EchoRemote) ValidateParameters(parameters map[string]interface{}) error 
 }
 
 func (m EchoRemote) ListCommits(properties map[string]interface{}, parameters map[string]interface{}, tags []remote.Tag) ([]remote.Commit, error) {
-
+	panic("implement me")
 }
 
 func (m EchoRemote) GetCommit(properties map[string]interface{}, parameters map[string]interface{}, commitId string) (*remote.Commit, error) {

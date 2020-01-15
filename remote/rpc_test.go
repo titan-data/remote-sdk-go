@@ -10,7 +10,7 @@ import (
 
 func getEcho(t *testing.T) Remote {
 	Clear()
-	r, err := Load("echo", ".")
+	r, err := Load("echo", "../build")
 	if err != nil {
 		t.Fatal(err)
 	}
