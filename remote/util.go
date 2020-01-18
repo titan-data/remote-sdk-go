@@ -124,18 +124,18 @@ func MatchTags(commit map[string]interface{}, query []Tag) bool {
 	}
 
 	var ok bool
-	var tags map[string]string
-	if tags, ok = commit["tags"].(map[string]string); !ok {
+	var tags map[string]interface{}
+	if tags, ok = commit["tags"].(map[string]interface{}); !ok {
 		return false
 	}
 
 	for _, t := range query {
-		var v string
+		var v interface{}
 		if v, ok = tags[t.Key]; !ok {
 			return false
 		}
 
-		if t.Value != nil && v != *t.Value {
+		if t.Value != nil && v.(string) != *t.Value {
 			return false
 		}
 	}

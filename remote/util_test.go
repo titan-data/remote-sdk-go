@@ -126,7 +126,11 @@ func makeCommit(props map[string]string) map[string]interface{} {
 	if len(props) == 0 {
 		return map[string]interface{}{}
 	} else {
-		return map[string]interface{}{"tags": props}
+		p := map[string]interface{}{}
+		for k, v := range props {
+			p[k] = v
+		}
+		return map[string]interface{}{"tags": p}
 	}
 }
 
