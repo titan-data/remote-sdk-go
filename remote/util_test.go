@@ -126,11 +126,7 @@ func makeCommit(props map[string]string) map[string]interface{} {
 	if len(props) == 0 {
 		return map[string]interface{}{}
 	} else {
-		p := map[string]interface{}{}
-		for k, v := range props {
-			p[k] = v
-		}
-		return map[string]interface{}{"tags": p}
+		return map[string]interface{}{"tags": props}
 	}
 }
 
@@ -154,6 +150,11 @@ func TestMatchExact(t *testing.T) {
 	assert.True(t, MatchTags(makeCommit(map[string]string{"a": "b"}), tags))
 	assert.False(t, MatchTags(makeCommit(map[string]string{"a": "B"}), tags))
 	assert.False(t, MatchTags(makeCommit(map[string]string{"c": "d"}), tags))
+}
+
+func TestMatchInterface(t *testing.T) {
+	tags := []Tag{exactTag("a", "b")}
+	assert.True(t, MatchTags(map[string]interface{}{"tags": map[string]interface{}{"a": "b"}}, tags))
 }
 
 func TestMatchExistence(t *testing.T) {
