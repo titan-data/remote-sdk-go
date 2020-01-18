@@ -152,6 +152,11 @@ func TestMatchExact(t *testing.T) {
 	assert.False(t, MatchTags(makeCommit(map[string]string{"c": "d"}), tags))
 }
 
+func TestMatchInterface(t *testing.T) {
+	tags := []Tag{exactTag("a", "b")}
+	assert.True(t, MatchTags(map[string]interface{}{"tags": map[string]interface{}{"a": "b"}}, tags))
+}
+
 func TestMatchExistence(t *testing.T) {
 	tags := []Tag{existTag("a")}
 	assert.False(t, MatchTags(makeCommit(map[string]string{}), tags))

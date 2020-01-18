@@ -64,9 +64,9 @@ func TestListCommits(t *testing.T) {
 	if assert.NoError(t, err) {
 		assert.Len(t, commits, 2)
 		assert.Equal(t, "two", commits[0].Id)
-		assert.Equal(t, "two", commits[0].Properties["tags"].(map[string]string)["name"])
+		assert.Equal(t, "two", commits[0].Properties["tags"].(map[string]interface{})["name"])
 		assert.Equal(t, "one", commits[1].Id)
-		assert.Equal(t, "one", commits[1].Properties["tags"].(map[string]string)["name"])
+		assert.Equal(t, "one", commits[1].Properties["tags"].(map[string]interface{})["name"])
 	}
 }
 
