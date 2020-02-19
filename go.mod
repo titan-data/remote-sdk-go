@@ -5,7 +5,7 @@ require (
 	github.com/golang/protobuf v1.3.3
 	github.com/hashicorp/go-hclog v0.12.0
 	github.com/hashicorp/go-plugin v1.0.1
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.5.0
 	google.golang.org/grpc v1.27.1
 )
 
